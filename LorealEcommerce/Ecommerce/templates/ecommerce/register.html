@@ -1,0 +1,42 @@
+{% extends "ecommerce/base.html" %}
+
+{% block title %}Register{% endblock title %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg p-4 border-0 rounded-3" style="max-width: 500px; width: 100%;">
+        <div class="text-center mb-4">
+            <h2 class="text-primary fw-bold">Create an Account</h2>
+            <p class="text-muted">Sign up to explore more!</p>
+        </div>
+        
+        <form action="" method="POST" novalidate>
+            {% csrf_token %}
+            
+            {% if mf.non_field_errors %}
+                {% for error in mf.non_field_errors %}
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <i class="fas fa-exclamation-circle me-2"></i> {{ error }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% for m in mf %}
+            <div class="mb-3">
+                <label class="form-label fw-bold">{{ m.label }}</label>
+                {{ m }}
+                <small class="text-danger">{{ m.errors }}</small>
+            </div>
+            {% endfor %}
+            
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-success w-100 py-2 fw-bold">Sign Up</button>
+            </div>
+        </form>
+
+        <div class="text-center mt-3">
+            <p class="mb-0">Already have an account? <a href="{% url 'login' %}" class="text-primary fw-bold">Login here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
