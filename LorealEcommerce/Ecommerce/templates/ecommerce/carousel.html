@@ -1,44 +1,39 @@
-{% block content %}
-        
-<!-- L'Oréal Product Carousel -->
-<div id="lorealCarousel" class="carousel slide carousel-fade" data-ride="carousel">
-  <div class="carousel-inner">
-    
-    <!-- Product 1 -->
-    <div class="carousel-item active">
-      <img src="{% static 'ecommerce/images/loreal_product1.jpg' %}" class="d-block w-100" alt="L'Oréal Product 1">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>Revitalift Hyaluronic Acid Serum</h1>
-          <p>Hydrates and plumps skin instantly with the power of hyaluronic acid for a youthful glow.</p>
+{% load static %}
+<!-- Carousel Section -->
+<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'ecommerce/image/carousel/loreal_product1.jpg' %}" class="d-block w-100" alt="Skincare">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Radiant Skin, Confident You</h1>
+                    <p>Discover L’Oréal’s advanced skincare solutions for a glowing complexion.</p>
+                    <p><a class="btn btn-lg btn-primary" href="{% url "shampoo_categories" %}" role="button" style="background-color: rgb(245, 229, 10);">Explore</a></p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    
-    <!-- Product 2 -->
-    <div class="carousel-item">
-      <img src="{% static 'ecommerce/images/loreal_product2.jpg' %}" class="d-block w-100" alt="L'Oréal Product 2">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>Elvive Total Repair 5 Shampoo</h1>
-          <p>Repairs damaged hair, restoring strength, shine, and softness in just one wash.</p>
+
+        <div class="carousel-item">
+            <img src="{% static 'ecommerce/image/carousel/loreal_product2.webp' %}" class="d-block w-100" alt="Haircare">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Revitalize Your Hair</h1>
+                    <p>Professional hair care solutions tailored to your needs.</p>
+                    <p><a class="btn btn-lg btn-primary" href="{% url 'serum_categories' %}" role="button" style="background-color: rgb(245, 229, 10);">Explore</a></p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    
-    <!-- Product 3 -->
-    <div class="carousel-item">
-      <img src="{% static 'ecommerce/images/loreal_product3.jpg' %}" class="d-block w-100" alt="L'Oréal Product 3">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>Color Riche Matte Lipstick</h1>
-          <p>Luxurious, long-lasting matte lipstick with intense hydration and bold color.</p>
+
+        <div class="carousel-item">
+            <img src="{% static 'ecommerce/image/carousel/loreal_product3.webp' %}" class="d-block w-100" alt="Makeup">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Enhance Your Beauty</h1>
+                    <p>Explore L’Oréal’s latest makeup trends and products.</p>
+                    <p><a class="btn btn-lg btn-primary" href="{% url 'hair_colour_categories' %}" role="button" style="background-color: rgb(245, 229, 10);">Explore</a></p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
-<!-- L'Oréal Product Carousel End -->
-
-{% endblock content %}
-
+<!-- End of Carousel Section -->

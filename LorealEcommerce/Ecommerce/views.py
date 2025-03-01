@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product
+from django.shortcuts import render, redirect
+from .models import Product  # Pet → Product
 from .forms import RegistrationForm, AuthenticateForm, ChangePasswordForm, UserProfileForm, AdminProfileForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 # Home Page
 def home(request):
@@ -16,95 +17,92 @@ def about(request):
 def contact(request):
     return render(request, 'ecommerce/contact.html')
 
-# Category Views
+# Shampoo Category
 def shampoo_categories(request):
-    shampoos = Product.objects.filter(category='SHAMPOO')
-    return render(request, 'ecommerce/shampoo_categories.html', {'products': shampoos})
+    products = Product.objects.filter(category='SHAMPOO')
+    return render(request, 'ecommerce/shampoo_categories.html', {'products': products})
 
+# Serum Category
 def serum_categories(request):
-    serums = Product.objects.filter(category='SERUM')
-    return render(request, 'ecommerce/serum_categories.html', {'products': serums})
+    products = Product.objects.filter(category='SERUM')
+    return render(request, 'ecommerce/serum_categories.html', {'products': products})
 
+# Hair Colour Category
 def hair_colour_categories(request):
-    hair_colours = Product.objects.filter(category='HAIR_COLOR')  # Fixed category name
-    return render(request, 'ecommerce/hair_colour_categories.html', {'products': hair_colours})
+    products = Product.objects.filter(category='HAIR_COLOUR')
+    return render(request, 'ecommerce/hair_colour_categories.html', {'products': products})
 
 # Product Details
-def loreal_products(request, id):
-    product = get_object_or_404(Product, pk=id)  # Safer than Product.objects.get()
+def product_details(request, id):
+    product = Product.objects.get(pk=id)
     return render(request, 'ecommerce/product_details.html', {'product': product})
 
-# User Registration
+
+# =======================================================================================
+
+# Registration View
 def register(request):
-    if request.user.is_authenticated:
-        return redirect('profile')
-
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Registration Successful! Please log in.')
-            return redirect('login')  # Redirect to login instead of 'registration'
-    else:
-        form = RegistrationForm()
-    
-    return render(request, 'ecommerce/register.html', {'form': form})
-
-# User Login
-def log_in(request):
-    if request.user.is_authenticated:
-        return redirect('profile')
-
-    if request.method == 'POST':
-        form = AuthenticateForm(request, request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-            if user:
-                login(request, user)
-                messages.success(request, f'Welcome {username}!')
-                return redirect('home')
-            else:
-                messages.error(request, 'Invalid username or password.')
-    
-    form = AuthenticateForm()
-    return render(request, 'ecommerce/login.html', {'form': form})
-
-# User Profile
-def profile(request):
     if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = RegistrationForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Registration Successful!')
+                return redirect('register')
+        else:
+            form = RegistrationForm()
+        return render(request, 'ecommerce/register.html', {'form': form})
+    else:
+        return redirect('profile')
+
+# Login View
+def log_in(request):
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AuthenticateForm(request, request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('home')
+        else:
+            form = AuthenticateForm()
+        return render(request, 'ecommerce/login.html', {'form': form})
+    else:
+        return redirect('profile')
+
+# Profile View
+def profile(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AdminProfileForm(request.POST, instance=request.user) if request.user.is_superuser else UserProfileForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Profile Updated Successfully!')
+        else:
+            form = AdminProfileForm(instance=request.user) if request.user.is_superuser else UserProfileForm(instance=request.user)
+        return render(request, 'ecommerce/profile.html', {'name': request.user, 'form': form})
+    else:
         return redirect('login')
 
-    if request.method == 'POST':
-        form = AdminProfileForm(request.POST, instance=request.user) if request.user.is_superuser else UserProfileForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Profile Updated Successfully!')
-    else:
-        form = AdminProfileForm(instance=request.user) if request.user.is_superuser else UserProfileForm(instance=request.user)
-    
-    return render(request, 'ecommerce/profile.html', {'name': request.user, 'form': form})
-
-# User Logout
+# Logout View
 def log_out(request):
     logout(request)
-    messages.success(request, 'You have successfully logged out.')
     return redirect('home')
 
-# Change Password
+# Change Password View
 def changepassword(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-
-    if request.method == 'POST':
-        form = ChangePasswordForm(request.user, request.POST)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-            messages.success(request, 'Password changed successfully!')
-            return redirect('profile')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = ChangePasswordForm(request.user, request.POST)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, form.user)
+                return redirect('profile')
+        else:
+            form = ChangePasswordForm(request.user)
+        return render(request, 'ecommerce/changepassword.html', {'form': form})
     else:
-        form = ChangePasswordForm(request.user)
-    
-    return render(request, 'ecommerce/changepassword.html', {'form': form})
+        return redirect('login')
