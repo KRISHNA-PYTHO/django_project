@@ -1,0 +1,79 @@
+/* General Body Styling */
+body {
+  background-color: rgb(225, 226, 143);
+}
+
+/* Navbar Styling */
+.navbar {
+  background-color: rgb(245, 229, 10);
+  padding: 10px;
+}
+
+.navbar a {
+  color: rgb(0, 0, 139); /* Dark blue for better contrast */
+  font-weight: bold;
+}
+
+/* Custom CSS for carousel images */
+#carouselExampleFade img {
+  max-height: 550px;
+  width: 100%;
+  object-fit: contain; /* Ensures full image is visible */
+}
+
+/* Card Styling */
+.card-img-top {
+  width: 100%;
+  height: 250px; /* Fixed height */
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.card {
+  border-radius: 15px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 22px;
+}
+
+.card-text {
+  text-align: center;
+}
+
+/* Product Image Styling */
+.product-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Search Bar */
+.custom-search-bar {
+  width: 300px;
+  border-radius: 20px;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  background-color: rgb(245, 229, 10);
+  border-radius: 10px;
+}
+
+/* Buttons */
+.btn-custom {
+  background-color: rgb(245, 229, 10);
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+/* Price Styling */
+.rupee {
+  text-decoration: line-through;
+  color: red;
+}
+
