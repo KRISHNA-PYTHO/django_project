@@ -1,0 +1,47 @@
+<footer class="pt-4 my-md-5 pt-md-5 border-top bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-4 text-center text-md-left">
+                <img class="mb-2" src="static/core/images/shoestore_logo.png" alt="Shoe Store Logo" width="94" height="94">
+                <p class="text-muted">Your one-stop destination for stylish and comfortable shoes.</p>
+                <small class="d-block mb-3 text-muted">© 2023 ShoeStore. All rights reserved.</small>
+            </div>
+            <div class="col-6 col-md-2">
+                <h5 class="mb-3">Categories</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="{% url 'mencategories' %}">Men's Shoes</a></li>
+                    <li><a class="text-muted" href="{% url 'womencategories' %}">Women's Shoes</a></li>
+                    <li><a class="text-muted" href="{% url 'kidscategories' %}">Kids' Shoes</a></li>
+                    <li><a class="text-muted" href="#">Sports Shoes</a></li>
+                    <li><a class="text-muted" href="#">Formal Shoes</a></li>
+                    <li><a class="text-muted" href="#">Casual Shoes</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-2">
+                <h5 class="mb-3">Quick Links</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="{% url 'about' %}">About Us</a></li>
+                    <li><a class="text-muted" href="{% url 'contact' %}">Contact Us</a></li>
+                    <li><a class="text-muted" href="#">FAQs</a></li>
+                    <li><a class="text-muted" href="#">Shipping Policy</a></li>
+                    <li><a class="text-muted" href="#">Return Policy</a></li>
+                    <li><a class="text-muted" href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-4">
+                <h5 class="mb-3">Connect With Us</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                    <li><a class="text-muted" href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a class="text-muted" href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a class="text-muted" href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                </ul>
+                <h5 class="mt-4 mb-3">Newsletter</h5>
+                <form class="form-inline">
+                    <input type="email" class="form-control mr-2" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</footer>

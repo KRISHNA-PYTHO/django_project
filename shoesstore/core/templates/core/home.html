@@ -1,0 +1,55 @@
+{% extends "core/base.html" %}
+
+{% block title %}Home{% endblock title %}
+{% load static %}
+
+
+
+{% block content %}
+
+
+<div class="container">
+    <div class="fade-in">
+        <h1>Welcome to ShoeStore!</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-4 slide-in-left">
+            <div class="card">
+                <img src="{% static 'core/image/carousel/men shoes.png' %}" class="card-img-top" alt="Men's Shoes">
+                <div class="card-body">
+                    <h5 class="card-title">Men's Shoes</h5>
+                    <p class="card-text">Explore our latest collection of men's shoes.</p>
+                    <a href="{% url 'mencategories' %}" class="btn btn-primary">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 slide-in-right">
+            <div class="card">
+                <img src="{% static 'core/image/women shoes/OIP.jpg' %}" class="card-img-top" alt="Women's Shoes">
+                <div class="card-body">
+                    <h5 class="card-title">Women's Shoes</h5>
+                    <p class="card-text">Discover trendy and elegant shoes for women.</p>
+                    <a href="{% url 'womencategories' %}" class="btn btn-primary">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 slide-in-right">
+            <div class="card">
+                <img src="{% static 'core/image/kids/kids.jpg' %}" class="card-img-top" alt="Kid's Shoes">
+                <div class="card-body">
+                    <h5 class="card-title">Kid's Shoes</h5>
+                    <p class="card-text">Discover trendy and elegant shoes for Kids.</p>
+                    <a href="{% url 'kidscategories' %}" class="btn btn-primary">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "core/carousel.html" %}
+
+
+{% include "core/featurette.html" %}
+
+
+{% endblock content %}
