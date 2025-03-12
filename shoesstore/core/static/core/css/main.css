@@ -1,0 +1,395 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+.navbar {
+    background-color: #dc0a14 !important;
+    padding: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(136, 7, 11, 0.1);
+}
+.navbar:hover {
+    background-color: lightcoral !important;
+}
+
+button, .btn {
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 5px;
+}
+button:hover, .btn:hover {
+    background-color: #c70039;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.container-fluid-profile{
+    margin-top: 50px;
+}
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 40px;
+
+}
+.carousel-image {
+    max-height: 400px; /* Adjust this value to control the height */
+    width: auto; /* Maintain aspect ratio */
+    margin: 0 auto; /* Center the image horizontally */
+}
+
+/* Optional: Adjust the carousel container size */
+.carousel-inner {
+    max-height: 500px; /* Adjust this value to fit your design */
+}
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Profile Section */
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+}
+.profile img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.profile-content {
+    margin-top: 10px;
+}
+
+/* Categories */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.col-sm-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.women_shoes_card {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    margin-top: 70px;
+}
+
+.women_shoes_card:hover {
+    transform: scale(1.05);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px; /* Adjust height as needed */
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+}
+
+.card-body {
+    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+}
+
+.text-dark {
+    color: #333;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+.text-danger {
+    color: #dc3545;
+}
+
+.rupee {
+    font-size: 0.875rem;
+}
+
+.fa-solid {
+    margin-right: 5px;
+}
+/* Footer */
+.footer {
+    background: #343a40;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+.slide-in-left {
+    animation: slideInLeft 1s ease-in-out;
+}
+
+.slide-in-right {
+    animation: slideInLeft 1s ease-in-out;
+}
+
+.bounce {
+    animation: bounce 1.5s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+    .navbar {
+        padding: 10px;
+    }
+    .profile img {
+        width: 100px;
+        height: 100px;
+    }
+    .category-box {
+        width: 90px;
+        height: 90px;
+    }
+    .card {
+        max-width: 250px;
+    }
+    .card img {
+        height: 150px;
+    }
+}
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+/* Card Styles */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-bod {
+    padding: 20px;
+}
+
+/* Image Styles */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Product Name Styles */
+.lead {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Quantity Adjustment Buttons */
+.btn-link {
+    text-decoration: none;
+    color: #007bff;
+    padding: 5px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.btn-link:hover {
+    color: #0056b3;
+}
+
+.form-control {
+    text-align: center;
+    width: 60px;
+    margin: 0 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* Price Styles */
+h5.mb-0 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #28a745;
+}
+
+/* Delete Button Styles */
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Proceed to Pay Button */
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    padding: 15px;
+    font-size: 1.25rem;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+/* Empty Cart Styles */
+.empty-cart {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
+.figcaption {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .col-md-2, .col-md-3, .col-md-1 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .form-control {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .btn-link {
+        display: block;
+        margin: 10px 0;
+    }
+
+    h5.mb-0 {
+        font-size: 1.25rem;
+    }
+}

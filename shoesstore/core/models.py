@@ -86,10 +86,10 @@ class Shoes(models.Model):
         original_price = models.IntegerField()
         discounted_price = models.IntegerField()
         shoe_image = models.ImageField(upload_to='shoe_images/', null=True, blank=True)
-        show_in_carousel = models.ImageField(upload_to='shoe_images/', null=True, blank=True)
+        show_in_carousel = models.BooleanField
         colour = models.CharField(max_length=20, choices=COLOUR_CHOICES, default='BLACK')
         size = models.CharField(max_length=20, choices=SIZE_CHOICES, default='M')
-        discount_percentage = models.IntegerField(default=0)  # Discount percentage (e.g., 20 for 20%)
+        discount_percentage = models.IntegerField(default=0) 
 
         def __str__(self):
          return str(self.name)
@@ -103,7 +103,7 @@ class Shoes(models.Model):
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Shoes, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)         # Quantity cannot be negative so we have used PositiveIntegerField
+    quantity = models.PositiveIntegerField(default=1)        
 
     def __str__(self):
         return str(self.id)

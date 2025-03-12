@@ -52,13 +52,13 @@ def women_categories(request):
 
 def kids_categories(request):
     shoe = Shoes.objects.filter(category='KIDS')
-    return render(request, 'core/kids_categories.html', {'kc': shoe})
+    return render(request, 'core/kids_categories.html', {'shoe': shoe})
 
 
 
-def shoe_details(request, shoe_id):
-    shoe = get_object_or_404(Shoes, id=shoe_id)
-    return render(request, 'core/shoedetails.html', {'shoe': shoe})
+def shoe_details(request, id):
+    shoe = get_object_or_404(Shoes, id=id)
+    return render(request, 'core/shoe_details.html', {'shoe': shoe})
 
 
 # =======================================================================================
