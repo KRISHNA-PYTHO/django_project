@@ -1,395 +1,256 @@
-/* General Styling */
+/* Global Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
-    transition: all 0.3s ease-in-out;
-}
-
-
-html {
+    background-color: #f8f9fa;
+    color: #333;
     scroll-behavior: smooth;
 }
 
-
+/* Navbar */
 .navbar {
-    background-color: #dc0a14 !important;
-    padding: 15px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(136, 7, 11, 0.1);
+    background-color: #000;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.navbar:hover {
-    background-color: lightcoral !important;
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+.navbar a:hover {
+    color: #ff6f61;
 }
 
+/* Buttons */
 button, .btn {
-    background-color: #ff5733;
+    background-color: #ff6f61;
     color: white;
+    padding: 12px 24px;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: all 0.3s ease-in-out;
-    margin-bottom: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
 }
 button:hover, .btn:hover {
-    background-color: #c70039;
+    background-color: #e55b50;
     transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-.container-fluid-profile{
-    margin-top: 50px;
-}
-.card {
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    max-width: 300px;
-    margin-top: 40px;
-
-}
-.carousel-image {
-    max-height: 400px; /* Adjust this value to control the height */
-    width: auto; /* Maintain aspect ratio */
-    margin: 0 auto; /* Center the image horizontally */
 }
 
-/* Optional: Adjust the carousel container size */
-.carousel-inner {
-    max-height: 500px; /* Adjust this value to fit your design */
-}
-.card img {
+/* Carousel */
+.carousel-item img {
     width: 100%;
-    height: 200px;
+    height: 500px;
     object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Footer */
+.footer {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
+    font-size: 14px;
+}
+
+/* Product Cards */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Profile Section */
-.profile {
+/* Card Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.card {
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+/* Forms */
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #ff6f61;
+    box-shadow: 0px 0px 5px rgba(255, 111, 97, 0.5);
+}
+
+/* Checkout Page */
+.checkout-container {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+}
+
+/* Contact Page */
+.contact-form {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: auto;
+}
+
+/* View Cart Page */
+.cart-container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.cart-item {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+.cart-item-details {
+    flex: 1;
+    padding-left: 15px;
+    font-size: 16px;
+}
+.cart-item .remove-btn {
+    background: red;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.cart-item .remove-btn:hover {
+    background: darkred;
+}
+.cart-total {
+    text-align: right;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #ff6f61;
+}
+/* Shopping Cart Styles */
+
+.container {
+    max-width: 900px;
+    margin: auto;
     padding: 20px;
 }
-.profile img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-.profile-content {
-    margin-top: 10px;
+
+h2.text-center {
+    margin-bottom: 20px;
+    font-weight: bold;
 }
 
-/* Categories */
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+.card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
 }
 
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.col-sm-4 {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-    padding: 15px;
-    box-sizing: border-box;
-}
-
-.women_shoes_card {
-    display: flex;
-    flex-direction: column;
-    height: 80%;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    margin-top: 70px;
-}
-
-.women_shoes_card:hover {
-    transform: scale(1.05);
-}
-
-.card-img-top {
-    width: 100%;
-    height: 200px; /* Adjust height as needed */
-    object-fit: cover; /* Ensures the image covers the area without stretching */
+.card:hover {
+    transform: scale(1.02);
 }
 
 .card-body {
-    padding: 15px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.card-title {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.font-weight-bold {
-    font-weight: bold;
-}
-
-.text-dark {
-    color: #333;
-}
-
-.text-muted {
-    color: #6c757d;
-}
-
-.text-danger {
-    color: #dc3545;
-}
-
-.rupee {
-    font-size: 0.875rem;
-}
-
-.fa-solid {
-    margin-right: 5px;
-}
-/* Footer */
-.footer {
-    background: #343a40;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideInLeft {
-    from {
-        transform: translateX(-50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes bounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-5px);
-    }
-}
-
-.fade-in {
-    animation: fadeIn 1s ease-in-out;
-}
-.slide-in-left {
-    animation: slideInLeft 1s ease-in-out;
-}
-
-.slide-in-right {
-    animation: slideInLeft 1s ease-in-out;
-}
-
-.bounce {
-    animation: bounce 1.5s infinite;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 0 15px;
-    }
-    .navbar {
-        padding: 10px;
-    }
-    .profile img {
-        width: 100px;
-        height: 100px;
-    }
-    .category-box {
-        width: 90px;
-        height: 90px;
-    }
-    .card {
-        max-width: 250px;
-    }
-    .card img {
-        height: 150px;
-    }
-}
-/* General Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
     padding: 20px;
 }
 
-/* Card Styles */
-.card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-    margin-bottom: 20px;
-}
-
-.card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.card-bod {
-    padding: 20px;
-}
-
-/* Image Styles */
 .img-fluid {
-    max-width: 100%;
+    width: 100px;
     height: auto;
-    border-radius: 5px;
+    object-fit: cover;
 }
 
-/* Product Name Styles */
 .lead {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
 }
 
 .text-danger {
-    color: #dc3545 !important;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
-/* Quantity Adjustment Buttons */
 .btn-link {
+    color: #000;
     text-decoration: none;
-    color: #007bff;
-    padding: 5px;
-    border: none;
-    background: none;
-    cursor: pointer;
 }
 
 .btn-link:hover {
-    color: #0056b3;
+    color: #007bff;
 }
 
-.form-control {
+.form-control-sm {
     text-align: center;
-    width: 60px;
-    margin: 0 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 5px;
+    width: 50px;
 }
 
-/* Price Styles */
-h5.mb-0 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #28a745;
-}
-
-/* Delete Button Styles */
 .btn-danger {
     background-color: #dc3545;
-    border-color: #dc3545;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
+    border: none;
 }
 
 .btn-danger:hover {
     background-color: #c82333;
-    border-color: #bd2130;
 }
 
-/* Proceed to Pay Button */
-.btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-    padding: 15px;
-    font-size: 1.25rem;
+.proceed-to-pay {
     width: 100%;
-    border-radius: 10px;
-    margin-top: 20px;
-    cursor: pointer;
+    padding: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
-.btn-success:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
-}
-
-/* Empty Cart Styles */
 .empty-cart {
-    max-width: 100%;
-    height: auto;
     display: block;
-    margin: 20px auto;
+    margin: auto;
+    width: 300px;
 }
 
 .figcaption {
     text-align: center;
-    margin-top: 20px;
+    margin-bottom: 15px;
     font-size: 1.5rem;
-    color: #333;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .col-md-2, .col-md-3, .col-md-1 {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-
-    .form-control {
-        width: 100%;
-        margin: 10px 0;
-    }
-
-    .btn-link {
-        display: block;
-        margin: 10px 0;
-    }
-
-    h5.mb-0 {
-        font-size: 1.25rem;
-    }
+    font-weight: bold;
 }

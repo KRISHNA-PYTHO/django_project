@@ -1,70 +1,64 @@
 {% extends "core/base.html" %}
 {% load static %}
 {% block content %}
-                {% for item in cart_items %}
+{% load custom_filters %}
 
-                    <div class="card rounded-3 mb-4">
-                        <div class="card-bod p-4">
-                            <div class="row d-flex justify-content-between align-items-center">
-                            <div class="col-md-2 col-lg-2 col-xl-2">
-                                <img
-                                src="{{item.product.pet_image.url}}"
-                                class="img-fluid rounded-3" alt="Cotton T-shirt">
-                            </div>
-                            <div class="col-md-3 col-lg-3 col-xl-3">
-                                <p class="lead fw-normal text-danger mb-2">{{item.product.name}}</p> <!-- item.product.name = cart_items will hold all object from cart of current user , item variable will hold one object from cart_items and render on view_cart.html -->
-                            </div>
-                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                <button class="btn btn-link px-2">
-                                <a href="{% url 'delete_quantity' item.id %}"><i class="fas fa-minus"></i></a>
-                                </button>
-                                <div class="form-control form-control-sm">
-                                    {{item.quantity}}     
-                                </div>
-                                <button class="btn btn-link px-2">
-                                <a href="{% url 'add_quantity' item.id %}"><i class="fas fa-plus"></i></a> <!-- When we will click on + icon  {% url 'add_quantity' item.id %} add_quantity url will be hit along with item.id, item.id hold the 'id' of Cart model, so that quantity should be added of that particular pet and current user -->
-                                </button>
-                            </div>
-                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 ">
-                                <h5 class="mb-0 text-danger">₹{{item.product.discounted_price}}</h5>
-                            </div>
-                            <form action="{% url "deletecart" item.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                     <button type="submit" class="btn btn-danger">
-                                            <i class="fa-solid fa-trash-can"></i>                                     </button>
-                                    </div>
-                             </form>   
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    {% if cart_items %}
-                    <a href="{% url "checkout" %}" >
-                        <div >
-                            <button type="button" class="btn btn-success btn-block btn-lg proceed-to-pay ">Proceed to Pay</button>
-                        </div>
-                        
-                    </a>
-                    {% else %}
-                    <figure>
-                        <figcaption class="figcaption"><h2>Your cart is empty</h2></figcaption>
-                        <img src="{% static "core/images/empty_cart.png" %}" alt="empty_cart" class="empty-cart">
-                    </figure>
-                        <a href="{% url "home" %}" >
-                        <div >
-                            <button type="button" class="btn btn-success btn-block btn-lg proceed-to-pay ">Continue Shopping</button>
-                        </div>
-                        
-                    </a>
-                    {% endif %}
+<div class="container">
+    <h2 class="text-center">Your Shopping Cart</h2>
+
+    {% for item in cart_items %}
+    <div class="card rounded-3 mb-4">
+        <div class="card-body p-4">
+            <div class="row d-flex justify-content-between align-items-center">
+                <div class="col-md-2 col-lg-2 col-xl-2">
+                    <img src="{{ item.product.image.url }}" class="img-fluid rounded-3" alt="{{ item.product.name }}">
                 </div>
+                <div class="col-md-3 col-lg-3 col-xl-3">
+                    <p class="lead fw-normal text-danger mb-2">{{ item.product.name }}</p>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                    <button class="btn btn-link px-2">
+                        <a href="{% url 'delete_quantity' item.id %}"><i class="fas fa-minus"></i></a>
+                    </button>
+                    <div class="form-control form-control-sm">{{ item.quantity }}</div>
+                    <button class="btn btn-link px-2">
+                        <a href="{% url 'add_quantity' item.id %}"><i class="fas fa-plus"></i></a>
+                    </button>
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                    <h5 class="mb-0 text-danger">₹{{ item.product.discounted_price|multiply:item.quantity }}</h5>
+                </div>
+                <form action="{% url 'deletecart' item.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
-</div>
-</div>
+    </div>
+    {% endfor %}
 
+    {% if cart_items %}
+    <a href="{% url 'checkout' %}">
+        <div>
+            <button type="button" class="btn btn-success btn-block btn-lg proceed-to-pay">Proceed to Pay</button>
+        </div>
+    </a>
+    {% else %}
+    <figure>
+        <figcaption class="figcaption"><h2>Your cart is empty</h2></figcaption>
+        <img src="{% static 'core/images/empty_cart.png' %}" alt="empty_cart" class="empty-cart">
+    </figure>
+    <a href="{% url 'home' %}">
+        <div>
+            <button type="button" class="btn btn-success btn-block btn-lg proceed-to-pay">Continue Shopping</button>
+        </div>
+    </a>
+    {% endif %}
+</div>
 {% endblock content %}
 
 
