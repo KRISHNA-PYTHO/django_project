@@ -7,5 +7,5 @@ def multiply(value, arg):
     try:
         return float(value) * float(arg)
     except (ValueError, TypeError):
-        return 0  # Return 0 if an error occurs
+        return 0  # Return 0 if there's an error
 
