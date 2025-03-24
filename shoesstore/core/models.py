@@ -86,7 +86,7 @@ class Shoes(models.Model):
         original_price = models.IntegerField()
         discounted_price = models.IntegerField()
         shoe_image = models.ImageField(upload_to='shoe_images/', null=True, blank=True)
-        show_in_carousel = models.BooleanField
+        show_in_carousel = models.BooleanField(null=True)
         colour = models.CharField(max_length=20, choices=COLOUR_CHOICES, default='BLACK')
         size = models.CharField(max_length=20, choices=SIZE_CHOICES, default='M')
         discount_percentage = models.IntegerField(default=0) 

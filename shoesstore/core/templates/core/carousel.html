@@ -1,9 +1,9 @@
 
 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-        {% for product in shoe %}
+        {% for shoe in shoe %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{  product.shoe_images.url }}" class="d-block w-100" alt="{{ product.name }}">
+                <img src="{{  shoe.shoe_image.url }}" class="d-block w-100" alt="{{ shoe.name }}">
             </div>
         {% endfor %}
     </div>
