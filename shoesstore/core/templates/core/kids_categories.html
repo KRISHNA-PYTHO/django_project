@@ -10,7 +10,7 @@
         {% for shoe in shoe %}
         <div class="col-sm-4 mb-4">
             <a href="{% url 'shoedetails' shoe.id %}" style="text-decoration: none;">
-                <div class="card women_shoes_card">
+                <div class="card_women_shoes_card">
                     <img class="card-img-top" src="{{ shoe.shoe_image.url }}" alt="{{ shoe.name }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ shoe.name }}</h5>

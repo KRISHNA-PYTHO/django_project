@@ -96,7 +96,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  
 EMAIL_USE_TLS = True  
 EMAIL_HOST_USER = 'maurya1389@gmail.com'  
-EMAIL_HOST_PASSWORD = 'cbqy nrvg nqjr nzlh'  
+EMAIL_HOST_PASSWORD = 'addt xnpk ncsn fvwd'  
 DEFAULT_FROM_EMAIL = 'maurya1389@gmail.com'  
 
 # Static and Media Files

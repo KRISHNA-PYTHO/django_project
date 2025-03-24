@@ -1,15 +1,14 @@
 {% extends "core/base.html" %}
 
-{% block title %}Women's Shoes{% endblock title %}
+{% block title %}men's Shoes{% endblock title %}
 
 {% block content %}
 
-<!-- Women's Shoes Card -->
+<!-- men's Shoes Card -->
 <div class="container">
     <div class="row">
         {% for shoe in shoe %}
         <div class="col-sm-4 mb-4">
-            <a href="{% url 'shoedetails' shoe.id %}" style="text-decoration: none;">
                 <div class="card women_shoes_card">
                     <img class="card-img-top" src="{{ shoe.shoe_image.url }}" alt="{{ shoe.name }}">
                     <div class="card-body">
@@ -22,6 +21,7 @@
                             </h5>
                             <p class="text-muted">Colour: {{ shoe.get_colour_display }}</p>
                             <p class="text-muted">Size: {{ shoe.get_size_display }}</p>
+                            <a href="{% url 'shoedetails' shoe.id %}" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -30,6 +30,6 @@
         {% endfor %}
     </div>
 </div>
-<!-- End Women's Shoes Card -->
+<!-- End men's Shoes Card -->
 
 {% endblock content %}

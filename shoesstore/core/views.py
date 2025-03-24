@@ -386,7 +386,7 @@ def forgot_password(request):
             send_mail(
                 'Password Reset',
                 f'Click the following link to reset your password: {reset_url}',
-                'krishpytho1389@gmail.com',
+                'maurya1389@gmail.com',
                 [email],
                 fail_silently=False,
             )
