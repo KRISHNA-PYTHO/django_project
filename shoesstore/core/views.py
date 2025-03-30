@@ -428,12 +428,6 @@ def password_reset_done(request):
     return render(request, 'core/password_reset_done.html')
 
 
-def product_list(request):
-    products = Product.objects.all().order_by('-created_at')
-    return render(request, 'core/product_list.html', {'products': products})
-
-
-
 def orders_list(request):
     orders = Order.objects.filter(user=request.user).order_by('-order_at')  # Changed from created_at to order_at
     return render(request, 'core/orders.html', {'orders': orders})
