@@ -1,104 +1,454 @@
 {% extends "core/base.html" %}
-
 {% block content %}
+{% load custom_filters %}
 
+<div class="checkout-wrapper">
+    <div class="checkout-steps">
+        <div class="step active">
+            <div class="step-icon"><i class="fas fa-shopping-cart"></i></div>
+            <span>Cart</span>
+        </div>
+        <div class="step active">
+            <div class="step-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <span>Address</span>
+        </div>
+        <div class="step">
+            <div class="step-icon"><i class="fas fa-credit-card"></i></div>
+            <span>Payment</span>
+        </div>
+    </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-10 mt-5 ml-5 ">
-            <div class="container ">
-                    <div class="row">
-                        <div class="col-md-12 mt-5">
-                            <div class="card ">
-                                <div class="card-header">
-                                    <h3 class="text-xs-center"><strong>Order summary</strong></h3>
-                                </div>
-                                <div class="card-block">
-                                    <div class="table-responsive">
-                                        <table class="table table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <td><strong>Pet Name</strong></td>
-                                                    <td class="text-xs-center"><strong>Shoes Price</strong></td>
-                                                    <td class="text-xs-center"><strong>Shoes Quantity</strong></td>
-                                                    <td class="text-xs-right"><strong>Total</strong></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for item in cart_items %}
-                                                <tr>
-                                                    <td>{{item.product.name}}</td>
-                                                    <td class="text-xs-center">₹{{item.product.discounted_price}}</td>
-                                                    <td class="text-xs-center">{{item.quantity}}</td>
-                                                    <td class="text-xs-right">₹{{item.product.price_and_quantity_total}}</td>
-                                                </tr>
-                                                {% endfor %}
-                                                <tr>
-                                                    <td class="highrow"></td>
-                                                    <td class="highrow"></td>
-                                                    <td class="highrow text-xs-center"><strong>Subtotal</strong></td>
-                                                    <td class="highrow text-xs-right">₹<b>{{total}}</b></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="emptyrow"></td>
-                                                    <td class="emptyrow"></td>
-                                                    <td class="emptyrow text-xs-center"><strong>Shipping</strong></td>
-                                                    <td class="emptyrow text-xs-right">₹100</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="emptyrow"><i class="fa fa-barcode iconbig"></i></td>
-                                                    <td class="emptyrow"></td>
-                                                    <td class="emptyrow text-xs-center"><strong>Total</strong></td>
-                                                    <td class="emptyrow text-xs-right">₹<b>{{final_price}}</b></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+    <div class="checkout-container">
+        <div class="order-summary">
+            <div class="summary-header">
+                <h2><i class="fas fa-shopping-bag"></i> Order Summary</h2>
+                <span class="item-count">{{ cart_items|length }} items</span>
+            </div>
+
+            <div class="order-items">
+                {% for item in cart_items %}
+                <div class="order-item">
+                    <div class="item-image">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                        <span class="item-quantity">{{ item.quantity }}</span>
+                    </div>
+                    <div class="item-info">
+                        <h4>{{ item.product.name }}</h4>
+                        <div class="item-price">
+                            <span class="current">₹{{ item.product.discounted_price }}</span>
+                            <span class="original">₹{{ item.product.original_price }}</span>
+                            <span class="discount">{{ item.product.discount_percentage }}% OFF</span>
+                        </div>
+                    </div>
+                    <div class="item-total">₹{{ item.product.price_and_quantity_total }}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="price-summary">
+                <div class="summary-row">
+                    <span>Cart Total</span>
+                    <span>₹{{ total }}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping Fee</span>
+                    <span>₹100</span>
+                </div>
+                <div class="summary-row grand-total">
+                    <span>Grand Total</span>
+                    <span>₹{{ final_price }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="delivery-section">
+            <div class="section-header">
+                <h2><i class="fas fa-truck"></i> Delivery Address</h2>
+                <a href="{% url 'address' %}" class="add-address">
+                    <i class="fas fa-plus"></i> Add New
+                </a>
+            </div>
+
+            <form method="POST" action="{% url 'payment' %}" class="address-form">
+                {% csrf_token %}
+                <div class="address-grid">
+                    {% for add in address %}
+                    <label class="address-card">
+                        <input type="radio" name="selected_address" value="{{ add.id }}" {% if forloop.first %}checked{% endif %}>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="name-badge">{{ add.name|make_list|first }}</div>
+                                <h3>{{ add.name }}</h3>
+                            </div>
+                            <div class="address-details">
+                                <p><i class="fas fa-home"></i> {{ add.address }}</p>
+                                <p><i class="fas fa-city"></i> {{ add.city }}, {{ add.state }}</p>
+                                <p><i class="fas fa-map-pin"></i> {{ add.pincode }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="address-type">Home</span>
+                                <span class="selected-mark">
+                                    <i class="fas fa-check-circle"></i> Selected
+                                </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                       <form method="POST" action="{% url 'payment' %}">
-                        {% csrf_token %}
-                        <div class="col-sm-4 mt-3">
-                            {% for add in address %}
-                            <label class="address-label">
-                                <div class="card address-card shadow-sm mt-4 ">
-                                    <div class="card-body profile-form">
-                                        <h3 class="mb-3">
-                                            <input type="radio" name="selected_address" value="{{ add.id }}" checked>
-                                            <span class="address-name text-light">{{ add.name }}</span>
-                                        </h3>
-                                        <p class="address-detail">Address: {{ add.address }}</p>
-                                        <p class="address-detail">City: {{ add.city }}</p>
-                                        <p class="address-detail">State: {{ add.state }}</p>
-                                        <p class="address-detail">Pincode: {{ add.pincode }}</p>
-
-                                    </div>
-                                </div>
-                            </label>
-                            {% endfor %}
-                                <div class="checkout-button mt-5 ml-5 d-flex justify-content-between">
-                                    <div class="checkout-back">
-                                        <a href="{% url 'viewcart' %}">
-                                            <input type="button" class="btn btn-warning back-to-cart-button proceed-to-payment" value="Back to Cart">
-                                        </a>
-                                    </div>
-                                    <div class="checkout-process">
-                                        <a href="{% url "payment" %}">
-                                            <input type="submit" class="btn btn-warning proceed-to-payment" value="Proceed to Payment">
-                                        </a>
-                                    </div>
-                                </div> 
-                            </div>           
-                        </div>
-                    </form> 
-                    </div>
+                    </label>
+                    {% endfor %}
                 </div>
-        </div>            
+
+                <div class="action-bar">
+                    <a href="{% url 'viewcart' %}" class="back-link">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Return to Cart</span>
+                    </a>
+                    <button type="submit" class="proceed-btn">
+                        <span>Continue to Payment</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
+<style>
+.checkout-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.checkout-steps {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    gap: 60px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #999;
+    position: relative;
+}
+
+.step::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 2px;
+    background: #eee;
+    right: -60px;
+    top: 25px;
+}
+
+.step:last-child::after {
+    display: none;
+}
+
+.step.active {
+    color: #007bff;
+}
+
+.step.active .step-icon {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+}
+
+.step-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.checkout-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 40px;
+}
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.summary-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #333;
+    margin: 0;
+}
+
+.item-count {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.order-summary {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.order-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+.item-image {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.item-quantity {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.item-price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.current {
+    color: #007bff;
+    font-weight: 600;
+}
+
+.original {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9em;
+}
+
+.discount {
+    color: #00ff88;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.price-summary {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 30px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    color: #666;
+}
+
+.grand-total {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #007bff;
+    border-top: 2px dashed #eee;
+    margin-top: 10px;
+    padding-top: 20px;
+}
+
+.savings {
+    text-align: center;
+    margin-top: 20px;
+    color: #00ff88;
+    font-weight: 600;
+}
+
+.delivery-section {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.add-address {
+    color: #007bff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.address-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.address-card {
+    cursor: pointer;
+}
+
+.address-card input[type="radio"] {
+    display: none;
+}
+
+.card-content {
+    border: 2px solid #eee;
+    border-radius: 15px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.address-card input[type="radio"]:checked + .card-content {
+    border-color: #007bff;
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
+}
+
+.name-badge {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.address-details p {
+    margin: 10px 0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.address-type {
+    background: #f0f0f0;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 12px;
+    color: #666;
+}
+
+.selected-mark {
+    color: #00ff88;
+    display: none;
+}
+
+.address-card input[type="radio"]:checked + .card-content .selected-mark {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.action-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.back-link, .proceed-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.back-link {
+    color: #007bff;
+    background: white;
+    border: 2px solid #007bff;
+}
+
+.proceed-btn {
+    color: white;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    border: none;
+    cursor: pointer;
+}
+
+.back-link:hover, .proceed-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+}
+
+@media (max-width: 1024px) {
+    .checkout-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .checkout-steps {
+        gap: 30px;
+    }
+    
+    .step::after {
+        width: 30px;
+        right: -30px;
+    }
+}
+</style>
 {% endblock content %}
 
 

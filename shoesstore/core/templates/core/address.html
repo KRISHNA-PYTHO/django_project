@@ -1,99 +1,370 @@
 {% extends "core/base.html" %}
-
 {% block content %}
-<div class="container-fluid profile">
-      <div class="row">
-        <div class="col-md-2 d-none d-md-block sidebar" >
-            <nav >
-            <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url "profile" %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    Dashboard <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url "changepassword" %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    Change Password <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-                    Orders
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "viewcart"  %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                    Cart
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "address" %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                    Address
-                    </a>
-                </li>
-                </ul>            
-            </div>
-            </nav>
-        </div>    
-        <div class="col-md-8">
-                <div class="container">
-                    <div class="row">
-                            <div class="col-sm-5">
-                    {% comment %} <section class="h-100" style="background-color: #eee;"> {% endcomment %}
-                        <div class="container profile-form">
-                            <div class="reg ">
-                                <h3 class="text-primary">Profile</h3>
-                            </div>
-                            <form action="" method="POST" novalidate>
-                                {% csrf_token %}
-                                {% for f in mf %}
-                                <div class="form-group mr-4 ml-4 ">
-                                    {{f.label_tag}} {{f}} {{f.errors}}
-                                </div>
-                                {% endfor %}
-                                <div class="text-center">
-                                    <input type="submit" value="Save" class="btn btn-success register-button">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                     <div class="col-sm-6">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    {% for add in address %}
-                                    <div class="card flex-md-row mb-4 box-shadow h-md-250 mt-4 ml-4">
-                                        <div class="card-body d-flex flex-column align-items-start">
-                                            <h3 class="mb-0">
-                                            Name: {{add.name}}
-                                        </h3>
-                                        <p class="card-text mb-auto">Address:{{add.address}} </p>
-                                        <p class="card-text mb-auto">City:{{add.city}} </p>
-                                        <p class="card-text mb-auto">State: {{add.state}} </p>
-                                        <p class="card-text mb-auto">Pincode:{{add.pincode}} </p>
-                                        <form action="{% url "deleteaddress" add.id %}" method="POST">
-                                            {% csrf_token %}
-                                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                            <input type="submit" class="btn btn-danger btn-sm mt-2" value="Delete Address">
-                                            </div>
-                                        </form>   
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
-                </div>        
-            </div>
-        </div>
-      </div>
+
+<div class="address-manager-container">
+    <div class="page-header">
+        <h1><i class="fas fa-map-marked-alt"></i> My Addresses</h1>
+        <p>Manage your delivery locations</p>
     </div>
 
+    <div class="content-grid">
+        <div class="address-list">
+            <div class="section-header">
+                <h2>Saved Addresses</h2>
+                <button class="add-address-btn" onclick="toggleForm()">
+                    <i class="fas fa-plus"></i>
+                    Add New Address
+                </button>
+            </div>
+
+            <div class="address-grid">
+                {% for add in address %}
+                <div class="address-card">
+                    <div class="card-header">
+                        <div class="name-badge">{{ add.name|make_list|first }}</div>
+                        <h3>{{ add.name }}</h3>
+                        <span class="address-type">Home</span>
+                    </div>
+                    
+                    <div class="address-details">
+                        <p><i class="fas fa-home"></i> {{ add.address }}</p>
+                        <p><i class="fas fa-city"></i> {{ add.city }}, {{ add.state }}</p>
+                        <p><i class="fas fa-map-pin"></i> {{ add.pincode }}</p>
+                    </div>
+
+                    <div class="card-actions">
+                        <form action="{% url 'deleteaddress' add.id %}" method="post" class="delete-form">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this address?')">
+                                <i class="fas fa-trash-alt"></i>
+                                Remove
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="no-address">
+                    <i class="fas fa-map-signs"></i>
+                    <p>No addresses saved yet</p>
+                    <button class="add-address-btn" onclick="toggleForm()">
+                        Add Your First Address
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="address-form-container" id="addressForm">
+            <div class="form-card">
+                <h2>Add New Address</h2>
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+                    
+                    {% for field in mf %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                            {% if field.field.required %}
+                                <span class="required">*</span>
+                            {% endif %}
+                        </label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-error">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" onclick="toggleForm()">
+                            <i class="fas fa-times"></i>
+                            Cancel
+                        </button>
+                        <button type="submit" class="save-btn">
+                            <i class="fas fa-check"></i>
+                            Save Address
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.address-manager-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.page-header h1 {
+    color: #333;
+    font-size: 32px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.page-header i {
+    color: #007bff;
+}
+
+.page-header p {
+    color: #666;
+    margin: 10px 0 0;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.add-address-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-address-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+}
+
+.address-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.address-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.address-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 123, 255, 0.1);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.name-badge {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.card-header h3 {
+    margin: 0;
+    color: #333;
+    flex: 1;
+}
+
+.address-type {
+    background: linear-gradient(45deg, #007bff10, #00ff8810);
+    color: #007bff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.address-details p {
+    margin: 10px 0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.address-details i {
+    color: #007bff;
+    width: 20px;
+}
+
+.card-actions {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    font-size: 14px;
+}
+
+.delete-btn:hover {
+    text-decoration: underline;
+}
+
+.no-address {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.05);
+}
+
+.no-address i {
+    font-size: 48px;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.form-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.05);
+}
+
+.form-card h2 {
+    margin: 0 0 30px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+}
+
+.required {
+    color: #ff4444;
+    margin-left: 4px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+}
+
+.field-error {
+    color: #ff4444;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.cancel-btn, .save-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cancel-btn {
+    background: white;
+    border: 2px solid #007bff;
+    color: #007bff;
+}
+
+.save-btn {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    border: none;
+    color: white;
+}
+
+.cancel-btn:hover, .save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.1);
+}
+
+@media (max-width: 1024px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-actions {
+        flex-direction: column;
+    }
+}
+</style>
+
+<script>
+function toggleForm() {
+    const form = document.getElementById('addressForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+// Hide form initially
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('addressForm').style.display = 'none';
+});
+</script>
 {% endblock content %}

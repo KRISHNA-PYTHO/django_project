@@ -1,49 +1,512 @@
-{% extends "core/base.html" %}
+{% extends 'core/base.html' %}
+{% load static %}
 
-{% block title %}About Us - ShoeStore{% endblock title %}
+{% block title %}About Us | Senikersku{% endblock %}
 
 {% block content %}
+<section class="about-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 fade-in-left">
+                <span class="subtitle">ABOUT US</span>
+                <h1>Welcome to <span class="highlight">Senikersku</span></h1>
+                <p class="lead">Your Premium Destination for Authentic Footwear</p>
+                <p class="description">Founded in 2023, Senikersku has revolutionized the footwear industry with our commitment to quality, style, and authenticity. We curate the finest collection of shoes that blend comfort with contemporary design.</p>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <h3>5K+</h3>
+                        <p>Happy Customers</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>500+</h3>
+                        <p>Products</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>50+</h3>
+                        <p>Brands</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 fade-in-right">
+                <div class="image-stack">
+                    <img src="{% static 'core/image/about/store.jpg' %}" alt="Our Store" class="main-image">
+                    <div class="floating-shape"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div class="container about">
-    <div class="heading_about">
-        <h1>About Us</h1>
-    </div>
-    <div class="para">
-        Welcome to <strong>Red Wing Shoes</strong>, where our passion for footwear drives everything we do. We are dedicated to providing the best shoes for men, women, and kids, ensuring style, comfort, and quality in every step you take.
-    </div>
+<style>
+.about-hero {
+    padding: 120px 0;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
 
-    <div class="mission">
-        <h1>Our Mission</h1>
-    </div>
-    <div class="mission_para">
-        At <strong>Red Wing Shoes</strong>, our mission is simple — to be your ultimate destination for all your footwear needs. Whether you're looking for trendy sneakers, elegant formal shoes, or durable kids' shoes, we've got you covered.
-    </div>
+.about-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0, 255, 255, 0.1) 0%, transparent 100%);
+    pointer-events: none;
+}
 
-    <div class="ourstory">
-        <h1>Our Story</h1>
-    </div>
-    <div class="ourstory_Para">
-        Founded in <strong>2025</strong>, <strong>Red Wing Shoes</strong> started as a small family business with a big dream. Our journey began with a shared love for footwear and a commitment to offering premium products and expert advice. Over the years, we've grown into a thriving community of shoe enthusiasts dedicated to providing exceptional footwear for everyone.
-    </div>
+.subtitle {
+    font-size: 1rem;
+    color: #00ffff;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+    display: block;
+}
 
-    <div class="apart">
-        <h1>What Sets Us Apart</h1>
-    </div>
-    <div class="apart_para">
-        <strong>Quality Products:</strong> We curate a wide range of premium shoes, from stylish sneakers to comfortable sandals, ensuring the perfect fit and style for every occasion.<br><br>
-        <strong>Expert Advice:</strong> Our knowledgeable and friendly staff are here to assist you. Whether you have questions about sizing or need recommendations, we're always ready to help.<br><br>
-        <strong>Community Engagement:</strong> We believe in fostering a strong sense of community. Follow us on social media to stay connected, participate in events, and share your style stories.
-    </div>
+.highlight {
+    color: #00ffff;
+    position: relative;
+    display: inline-block;
+}
 
-    <div class="commitment">
-        <h1>Our Commitment</h1>
-    </div>
-    <div class="commitment_para">
-        As shoe enthusiasts ourselves, we understand the importance of finding the perfect pair. That's why we are committed to providing:<br><br>
-        <strong>Exceptional Service:</strong> Your satisfaction is our top priority. From your first visit to ongoing support, we strive to exceed your expectations.<br><br>
-        <strong>Ethical Practices:</strong> We prioritize ethical sourcing and sustainable practices. Many of our products are eco-friendly and made with care.<br><br>
-        <strong>Giving Back:</strong> We believe in giving back to the community. <strong>ShoeStore</strong> supports local initiatives to ensure everyone has access to quality footwear.
-    </div>
-</div>
+.highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: rgba(0, 255, 255, 0.2);
+    z-index: -1;
+}
 
-{% endblock content %}
+h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.description {
+    color: #a0e6e6;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.stats-row {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+.stat-item {
+    text-align: left;
+}
+
+.stat-item h3 {
+    font-size: 2.5rem;
+    color: #00ffff;
+    margin-bottom: 0.5rem;
+}
+
+.stat-item p {
+    color: #a0e6e6;
+    font-size: 1rem;
+}
+
+.image-stack {
+    position: relative;
+    padding: 2rem;
+}
+
+.main-image {
+    width: 100%;
+    border-radius: 20px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.floating-shape {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 255, 255, 0.1);
+    border-radius: 20px;
+    z-index: 1;
+}
+
+.value-card {
+    background: rgba(30, 30, 30, 0.95);
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    padding: 40px 30px;
+    border-radius: 20px;
+    transition: all 0.4s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(0, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.value-card i {
+    font-size: 2.5rem;
+    color: #00ffff;
+    margin-bottom: 1.5rem;
+}
+
+.value-card h3 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.value-card p {
+    color: #a0e6e6;
+}
+
+.team-member {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    background: rgba(30, 30, 30, 0.95);
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #00ffff;
+    padding: 5px;
+}
+
+.team-member h4 {
+    color: #ffffff;
+    margin-top: 1.5rem;
+}
+
+.team-member p {
+    color: #00ffff;
+}
+
+/* Animations */
+.fade-in-left {
+    animation: fadeInLeft 1s ease-out;
+}
+
+.fade-in-right {
+    animation: fadeInRight 1s ease-out;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 992px) {
+    h1 {
+        font-size: 3rem;
+    }
+    
+    .stats-row {
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-hero {
+        padding: 80px 0;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .stats-row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .image-stack {
+        margin-top: 3rem;
+    }
+}
+</style>
+
+<section class="our-values">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Values</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="value-card">
+                    <i class="fas fa-gem"></i>
+                    <h3>Quality</h3>
+                    <p>We ensure every product meets the highest standards of quality and authenticity.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Customer First</h3>
+                    <p>Your satisfaction is our top priority, backed by excellent customer service.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="value-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Sustainability</h3>
+                    <p>Committed to sustainable practices and eco-friendly packaging.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="team-section">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Team</h2>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="team-member">
+                    <img src="{% static 'core/image/about/team1.jpg' %}" alt="Team Member">
+                    <h4>John Doe</h4>
+                    <p>Founder & CEO</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="team-member">
+                    <img src="{% static 'core/image/about/team2.jpg' %}" alt="Team Member">
+                    <h4>Jane Smith</h4>
+                    <p>Head of Design</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="team-member">
+                    <img src="{% static 'core/image/about/team3.jpg' %}" alt="Team Member">
+                    <h4>Mike Johnson</h4>
+                    <p>Operations Manager</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="team-member">
+                    <img src="{% static 'core/image/about/team4.jpg' %}" alt="Team Member">
+                    <h4>Sarah Williams</h4>
+                    <p>Customer Relations</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add this after the team section -->
+<section class="achievements">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 fade-in-left">
+                <div class="achievement-content">
+                    <span class="subtitle">WHY CHOOSE US</span>
+                    <h2>Experience the <span class="highlight">Difference</span></h2>
+                    <div class="achievement-grid">
+                        <div class="achievement-item">
+                            <div class="achievement-icon">
+                                <i class="fas fa-shipping-fast"></i>
+                            </div>
+                            <div class="achievement-text">
+                                <h4>Fast Delivery</h4>
+                                <p>Express shipping across India</p>
+                            </div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <div class="achievement-text">
+                                <h4>Authentic Products</h4>
+                                <p>100% genuine guarantee</p>
+                            </div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <div class="achievement-text">
+                                <h4>24/7 Support</h4>
+                                <p>Always here to help you</p>
+                            </div>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">
+                                <i class="fas fa-undo"></i>
+                            </div>
+                            <div class="achievement-text">
+                                <h4>Easy Returns</h4>
+                                <p>30-day return policy</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 fade-in-right">
+                <div class="achievement-image">
+                    <img src="{% static 'core/image/about/achievement.jpg' %}" alt="Achievement" class="img-fluid">
+                    <div class="experience-badge">
+                        <span class="years">10+</span>
+                        <span class="text">Years of Excellence</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Add these new styles */
+.achievements {
+    padding: 100px 0;
+    background-color: #1a1a1a;
+    position: relative;
+    overflow: hidden;
+}
+
+.achievement-content {
+    padding-right: 50px;
+}
+
+.achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.achievement-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(0, 255, 255, 0.05);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.achievement-item:hover {
+    background: rgba(0, 255, 255, 0.1);
+    transform: translateY(-5px);
+}
+
+.achievement-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.achievement-icon i {
+    color: #00ffff;
+    font-size: 1.5rem;
+}
+
+.achievement-text h4 {
+    color: #ffffff;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.achievement-text p {
+    color: #a0e6e6;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.achievement-image {
+    position: relative;
+    padding: 20px;
+}
+
+.achievement-image img {
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.experience-badge {
+    position: absolute;
+    bottom: 40px;
+    right: 0;
+    background: #00ffff;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+}
+
+.experience-badge .years {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1;
+}
+
+.experience-badge .text {
+    display: block;
+    font-size: 0.9rem;
+    color: #1a1a1a;
+    margin-top: 5px;
+}
+
+@media (max-width: 992px) {
+    .achievement-content {
+        padding-right: 0;
+        margin-bottom: 50px;
+    }
+    
+    .achievement-grid {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .achievement-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .experience-badge {
+        bottom: 20px;
+        right: 20px;
+        padding: 15px;
+    }
+}
+</style>
+{% endblock %}

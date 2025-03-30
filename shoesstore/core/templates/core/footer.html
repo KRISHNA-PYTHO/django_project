@@ -1,48 +1,245 @@
-<footer class="pt-4 my-md-5 pt-md-5 border-top bg-light">
-    {% load static %}
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-4 text-center text-md-left">
-                <img class="mb-2" src="{% static 'core/image/shorestore.jpg' %}" alt="Shoe Store Logo" width="94" height="94">
-                <p class="text-muted">Your one-stop destination for stylish and comfortable shoes.</p>
-                <small class="d-block mb-3 text-muted">© 2023 ShoeStore. All rights reserved.</small>
+{% load static %}
+
+<footer class="footer-section">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 footer-info animate-footer">
+                    <h3>Senikersku</h3>
+                    <p>Your premier destination for quality footwear. We bring you the latest trends and timeless classics.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="linkedin"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-links animate-footer">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><i class="fas fa-chevron-right"></i> <a href="{% url 'home' %}">Home</a></li>
+                        <li><i class="fas fa-chevron-right"></i> <a href="{% url 'about' %}">About us</a></li>
+                        <li><i class="fas fa-chevron-right"></i> <a href="{% url 'viewcart' %}">Products</a></li>
+                        <li><i class="fas fa-chevron-right"></i> <a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-contact animate-footer">
+                    <h4>Contact Us</h4>
+                    <p>
+                        123 Shoe Street <br>
+                        Fashion District, FD 12345<br>
+                        India <br><br>
+                        <strong>Phone:</strong> +1 234 567 8900<br>
+                        <strong>Email:</strong> info@senikersku.com<br>
+                    </p>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-newsletter animate-footer">
+                    <h4>Our Newsletter</h4>
+                    <p>Subscribe to get updates on new arrivals and special offers!</p>
+                    <form action="" method="post">
+                        <input type="email" name="email" class="form-control">
+                        <button type="submit" class="btn-subscribe">Subscribe</button>
+                    </form>
+                </div>
             </div>
-            <div class="col-6 col-md-2">
-                <h5 class="mb-3">Categories</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="{% url 'mencategories' %}">Men's Shoes</a></li>
-                    <li><a class="text-muted" href="{% url 'womencategories' %}">Women's Shoes</a></li>
-                    <li><a class="text-muted" href="{% url 'kidscategories' %}">Kids' Shoes</a></li>
-                    <li><a class="text-muted" href="#">Sports Shoes</a></li>
-                    <li><a class="text-muted" href="#">Formal Shoes</a></li>
-                    <li><a class="text-muted" href="#">Casual Shoes</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md-2">
-                <h5 class="mb-3">Quick Links</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="{% url 'about' %}">About Us</a></li>
-                    <li><a class="text-muted" href="{% url 'contact' %}">Contact Us</a></li>
-                    <li><a class="text-muted" href="#">FAQs</a></li>
-                    <li><a class="text-muted" href="#">Shipping Policy</a></li>
-                    <li><a class="text-muted" href="#">Return Policy</a></li>
-                    <li><a class="text-muted" href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md-4">
-                <h5 class="mb-3">Connect With Us</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-                    <li><a class="text-muted" href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                    <li><a class="text-muted" href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-                    <li><a class="text-muted" href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                </ul>
-                <h5 class="mt-4 mb-3">Newsletter</h5>
-                <form class="form-inline">
-                    <input type="email" class="form-control mr-2" placeholder="Enter your email" required>
-                    <button type="submit" class="btn btn-primary">Subscribe</button>
-                </form>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 copyright">
+                    &copy; 2025 <strong>Senikersku</strong>. All Rights Reserved Design By Krishna
+                </div>
+                <div class="col-md-6 credits">
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                        <i class="fab fa-cc-amex"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </footer>
+
+<style>
+.footer-section {
+    background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+    color: #fff;
+    padding: 60px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #007bff, #00ff88);
+}
+
+.animate-footer {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-footer:nth-child(1) { animation-delay: 0.1s; }
+.animate-footer:nth-child(2) { animation-delay: 0.2s; }
+.animate-footer:nth-child(3) { animation-delay: 0.3s; }
+.animate-footer:nth-child(4) { animation-delay: 0.4s; }
+
+.footer-section h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.footer-section h4 {
+    font-size: 18px;
+    position: relative;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+.footer-section h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 50px;
+    background: #007bff;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links ul li {
+    padding: 7px 0;
+    display: flex;
+    align-items: center;
+}
+
+.footer-links ul li i {
+    font-size: 12px;
+    color: #007bff;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+.footer-links ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-links ul li:hover i {
+    transform: translateX(5px);
+}
+
+.footer-links ul li:hover a {
+    color: #007bff;
+    padding-left: 5px;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    margin-right: 10px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background: #007bff;
+    transform: translateY(-3px);
+}
+
+.footer-newsletter .form-control {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.btn-subscribe {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    border: none;
+    padding: 10px 25px;
+    color: #fff;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-subscribe:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+}
+
+.footer-bottom {
+    background: rgba(0,0,0,0.2);
+    padding: 20px 0;
+    margin-top: 30px;
+}
+
+.payment-methods {
+    text-align: right;
+}
+
+.payment-methods i {
+    font-size: 24px;
+    margin-left: 10px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.payment-methods i:hover {
+    color: #007bff;
+    transform: translateY(-2px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-section {
+        padding: 40px 0 0;
+    }
+    
+    .payment-methods {
+        text-align: center;
+        margin-top: 15px;
+    }
+    
+    .copyright {
+        text-align: center;
+    }
+}
+</style>

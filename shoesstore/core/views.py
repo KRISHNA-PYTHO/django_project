@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Shoes, Cart, CustomerDetail, Order
+from .models import Shoes, Cart, CustomerDetail, Order  # Make sure Cart model exists in models.py
 from .forms import RegistrationForm, AuthenticateForm, ChangePasswordForm, UserProfileForm, AdminProfileForm, CustomerForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
@@ -27,8 +27,13 @@ from django.http import HttpResponse
 
 # Create your views here.
 def home(request):
-    shoe = Shoes.objects.all()
-    return render(request, 'core/home.html', {'shoe':shoe})
+    cart_count = Cart.objects.filter(user=request.user).count() if request.user.is_authenticated else 0
+    shoe = Shoes.objects.all()  # Added this line to define 'shoe' variable
+    context = {
+        'cart_count': cart_count,
+        'shoe': shoe,
+    }
+    return render(request, 'core/home.html', context)
 
 
 
@@ -421,3 +426,14 @@ def reset_password(request, uidb64, token):
 
 def password_reset_done(request):
     return render(request, 'core/password_reset_done.html')
+
+
+def product_list(request):
+    products = Product.objects.all().order_by('-created_at')
+    return render(request, 'core/product_list.html', {'products': products})
+
+
+
+def orders_list(request):
+    orders = Order.objects.filter(user=request.user).order_by('-order_at')  # Changed from created_at to order_at
+    return render(request, 'core/orders.html', {'orders': orders})

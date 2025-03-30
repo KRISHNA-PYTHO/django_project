@@ -1,47 +1,347 @@
 {% extends "core/base.html" %}
-
-{% block title %}Shoe Details{% endblock title %}
+{% block title %}{{ shoe.name }}{% endblock title %}
 
 {% block content %}
+{% load static %}
+<div class="container py-4">
+    <!-- Product Navigation -->
+    <div class="product-nav">
+        <a href="{% url 'home' %}" class="nav-link">Home</a>
+        <span class="nav-separator">/</span>
+        <span class="nav-current">{{ shoe.name }}</span>
+    </div>
 
-<div class="container shoedetails">
-    <div class="row">
-        <div class="col-sm-6">
-            <span class="border border-danger">
-                <img src="{{shoe.shoe_image.url }}" alt="{{ shoe.name }}" class="img-fluid rounded">
-            </span>
+    <div class="product-container">
+        <!-- Product Images -->
+        <div class="product-images">
+            <div class="main-image">
+                <img src="{{ shoe.shoe_image.url }}" alt="{{ shoe.name }}">
+                <div class="image-tag">{{ shoe.discount_percentage }}% OFF</div>
+            </div>
         </div>
-        <div class="col-sm-6">
-            <div class="container">
-                <h1 class="jumbotron-heading text-center text-danger">{{ shoe.name }}</h1>
-                <p class="lead text-center">{{ shoe.small_description }}</p>
-                <div class="text-center">
-                    <h4 class="font-weight-bold">
-                        <i class="fa-solid fa-indian-rupee-sign"></i>{{ shoe.discounted_price }}
-                        <small class="fw-light rupee"><del>₹{{ shoe.original_price }}</del></small>
-                        <small class="text-danger">({{ shoe.discount_percentage }}% off)</small>
-                    </h4>
-                    <p class="text-muted"><i class="fas fa-palette"></i> Colour: {{ shoe.get_colour_display }}</p>
-                    <p class="text-muted"><i class="fas fa-ruler"></i> Size: {{ shoe.get_size_display }}</p>
-                    <div class="form-group text-center mt-3">
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" class="form-control d-inline-block w-25">
-                    </div>
-                    <a href="{% url 'addtocart' shoe.id %}" class="btn btn-info my-2 mr-2">Add to cart</a>
-                    <a href="{% url 'buynow' shoe.id %}" class="btn btn-success my-2">Buy Now</a>
+
+        <!-- Product Info -->
+        <div class="product-info">
+            <h1>{{ shoe.name }}</h1>
+            
+            <div class="price-info">
+                <div class="price">₹{{ shoe.discounted_price }}</div>
+                <div class="original-price">₹{{ shoe.original_price }}</div>
+                <div class="discount">{{ shoe.discount_percentage }}% off</div>
+            </div>
+
+            <div class="product-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Color:</span>
+                    <span class="meta-value">{{ shoe.get_colour_display }}</span>
                 </div>
-                {% if messages %}
-                    {% for message in messages %}
-                        <span {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</span>
-                    {% endfor %}
-                {% endif %}
-                <div class="description">
-                    <h2 class="jumbotron-heading mt-5">Description</h2>
-                    {{ shoe.description }}
+                <div class="meta-item">
+                    <span class="meta-label">Size:</span>
+                    <span class="meta-value">{{ shoe.get_size_display }}</span>
+                </div>
+            </div>
+
+            <div class="product-description">
+                <p>{{ shoe.small_description }}</p>
+                <div class="description-full">
+                    {{ shoe.description|linebreaks }}
+                </div>
+            </div>
+
+            <div class="product-actions">
+                <div class="quantity">
+                    <button onclick="updateQty(-1)">−</button>
+                    <input type="number" value="1" min="1" max="10" id="qty">
+                    <button onclick="updateQty(1)">+</button>
+                </div>
+                <div class="action-buttons">
+                    <a href="{% url 'addtocart' shoe.id %}" class="btn-primary">Add to Cart</a>
+                    <a href="{% url 'buynow' shoe.id %}" class="btn-secondary">Buy Now</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<style>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.product-nav {
+    margin-bottom: 30px;
+}
+
+.nav-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.nav-separator {
+    margin: 0 10px;
+    color: #ccc;
+}
+
+.nav-current {
+    color: #666;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.product-images {
+    position: sticky;
+    top: 20px;
+}
+
+.main-image {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.main-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.image-tag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.product-info h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.price-info {
+    margin-bottom: 30px;
+}
+
+.price {
+    font-size: 36px;
+    font-weight: 700;
+    color: #007bff;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+    margin: 5px 0;
+}
+
+.discount {
+    color: #00cc66;
+    font-weight: 600;
+}
+
+.product-meta {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 30px 0;
+}
+
+.meta-item {
+    margin: 10px 0;
+}
+
+.meta-label {
+    color: #666;
+    width: 100px;
+    display: inline-block;
+}
+
+.meta-value {
+    color: #333;
+    font-weight: 500;
+}
+
+.product-description {
+    margin: 30px 0;
+    line-height: 1.6;
+    color: #666;
+}
+
+.product-actions {
+    margin-top: 40px;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.quantity button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #f0f0f0;
+    color: #333;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.quantity button:hover {
+    background: #007bff;
+    color: white;
+}
+
+.quantity input {
+    width: 60px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid #ddd;
+    margin: 0 10px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-primary, .btn-secondary {
+    flex: 1;
+    padding: 15px 30px;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background: #00cc66;
+    color: white;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    .product-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .product-images {
+        position: static;
+    }
+}
+</style>
+
+<script>
+function changeImage(thumb) {
+    const mainImage = document.getElementById('mainImage');
+    mainImage.src = thumb.querySelector('img').src;
+    
+    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+}
+
+function updateQty(change) {
+    const input = document.getElementById('qty');
+    const newValue = parseInt(input.value) + change;
+    if (newValue >= 1 && newValue <= 10) {
+        input.value = newValue;
+    }
+}
+</script>
+<!-- Add this after the product-features section -->
+
+    <div class="product-highlights">
+        <h4>Product Highlights</h4>
+        <ul>
+            <li><i class="fas fa-check"></i> Premium Quality Materials</li>
+            <li><i class="fas fa-check"></i> Comfortable Fit</li>
+            <li><i class="fas fa-check"></i> Durable Construction</li>
+            <li><i class="fas fa-check"></i> Stylish Design</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Add these styles -->
+<style>
+.product-description {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(0,123,255,0.02);
+    border-radius: 12px;
+}
+
+.description-header h3 {
+    color: #333;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+}
+
+.small-description {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.description-content {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.product-highlights {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.product-highlights h4 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.product-highlights ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.product-highlights li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    color: #555;
+}
+
+.product-highlights i {
+    color: #00ff88;
+    font-size: 1.1rem;
+}
+</style>
 {% endblock content %}

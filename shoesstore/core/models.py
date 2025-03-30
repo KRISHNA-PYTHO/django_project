@@ -100,14 +100,17 @@ class Shoes(models.Model):
             self.discount_percentage = int(((self.original_price - self.discounted_price) / self.original_price) * 100)
          super().save(*args, **kwargs)
 
+from django.db import models
+from django.contrib.auth.models import User
+
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Shoes, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)        
-
-    def __str__(self):
-        return str(self.id)
+    quantity = models.PositiveIntegerField(default=1)
     
+    def __str__(self):
+        return f"{self.user.username}'s Cart - {self.product.name}"
+
     @property
     def price_and_quantity_total(self):
         return self.product.discounted_price * self.quantity
@@ -116,7 +119,8 @@ class Order(models.Model):
     STATUS_CHOICES = [
         ('PENDING', 'Pending'),
         ('PROCESSING', 'Processing'),
-        ('COMPLETED', 'Completed'),
+        ('SHIPPED', 'Shipped'),
+        ('DELIVERED', 'Delivered'),
         ('CANCELLED', 'Cancelled'),
     ]
 
@@ -125,7 +129,7 @@ class Order(models.Model):
     shoe = models.ForeignKey(Shoes, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     order_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
+    status = models.CharField(max_length=50,choices=STATUS_CHOICES, default='Pending')
 
     def __str__(self):
         return str(self.id)

@@ -1,10 +1,229 @@
-
-<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+<div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-        {% for products in shoe %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{  products.shoe_image.url }}" class="d-block w-100" alt="{{ products.name }}">
+        <div class="carousel-item active">
+            <div class="video-container">
+                <div class="overlay"></div>
+                <button id="soundToggle" class="sound-toggle">
+                    <i class="fas fa-volume-mute"></i>
+                </button>
+                <div class="video-wrapper">
+                    <iframe 
+                        id="youtubeVideo"
+                        width="100%" 
+                        height="80%" 
+                        src="https://www.youtube.com/embed/nMdBtOdzXhQ?autoplay=1&mute=1&loop=1&playlist=nMdBtOdzXhQ&controls=0&showinfo=0&rel=0&enablejsapi=1"
+                        title="Nike Advertisement"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
             </div>
-        {% endfor %}
+        </div>
     </div>
 </div>
+
+<style>
+/* Add these new styles */
+.sound-toggle {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sound-toggle:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+}
+
+.sound-toggle i {
+    font-size: 1.2rem;
+}
+</style>
+
+<script>
+// Replace the existing script with this updated version
+document.addEventListener('DOMContentLoaded', function() {
+    const soundToggle = document.getElementById('soundToggle');
+    const youtubeVideo = document.getElementById('youtubeVideo');
+    let isMuted = true;
+
+    soundToggle.addEventListener('click', function() {
+        const icon = this.querySelector('i');
+        const videoSrc = youtubeVideo.src;
+        
+        if (isMuted) {
+            // Unmute video
+            youtubeVideo.src = videoSrc.replace('mute=1', 'mute=0');
+            icon.classList.remove('fa-volume-mute');
+            icon.classList.add('fa-volume-up');
+        } else {
+            // Mute video
+            youtubeVideo.src = videoSrc.replace('mute=0', 'mute=1');
+            icon.classList.remove('fa-volume-up');
+            icon.classList.add('fa-volume-mute');
+        }
+        
+        isMuted = !isMuted;
+    });
+});
+</script>
+
+<style>
+    .btn-warning {
+    background: rgba(255, 193, 7, 0.9);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+    background: #ffc107;
+    transform: scale(1.05);
+}
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 40vh;  /* Reduced from 70vh to 40vh */
+    overflow: hidden;
+    background: #000;
+}
+
+.video-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 40vh;  /* Reduced from 70vh to 40vh */
+}
+
+.video-wrapper iframe {
+    width: 100vw;
+    height: 56.25vw;
+    min-height: 40vh;  /* Reduced from 70vh to 40vh */
+    min-width: 177.77vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+/* Update media queries */
+@media (max-width: 768px) {
+    .video-container {
+        height: 35vh;  /* Reduced height for tablets */
+    }
+}
+
+@media (max-width: 576px) {
+    .video-container {
+        height: 30vh;  /* Reduced height for mobile */
+    }
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 1;
+}
+
+.carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.carousel-caption h2 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.carousel-caption p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.btn-outline-light {
+    border-width: 2px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255,255,255,0.4);
+}
+
+@media (max-width: 992px) {
+    .carousel-caption h2 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .video-container {
+        height: 70vh;
+    }
+    
+    .carousel-caption h2 {
+        font-size: 2.5rem;
+    }
+    
+    .carousel-caption p {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .video-container {
+        height: 60vh;
+    }
+    
+    .carousel-caption h2 {
+        font-size: 2rem;
+    }
+    
+    .carousel-caption p {
+        font-size: 1rem;
+    }
+    
+    .logo {
+        width: 200px !important;
+    }
+}
+</style>
+
+<!-- Add this script at the bottom of your file -->
+<script>
+document.getElementById('unmuteButton').addEventListener('click', function() {
+    var iframe = document.getElementById('youtubeVideo');
+    // Reload iframe with unmuted parameter
+    iframe.src = iframe.src.replace('mute=1', 'mute=0');
+    this.style.display = 'none';
+});
+</script>

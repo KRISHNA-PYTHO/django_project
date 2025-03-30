@@ -1,55 +1,255 @@
-{% extends "core/base.html" %}
-
-{% block title %}Home{% endblock title %}
+{% extends 'core/base.html' %}
 {% load static %}
 
-
+{% block title %}Senikersku | Premium Shoe Store{% endblock %}
 
 {% block content %}
+<!-- Hero Video Section -->
+{% include 'core/carousel.html' %}
 
-
-<div class="container">
-    <div class="fade-in">
-        <h1>Welcome to ShoeStore!</h1>
+<!-- Featured Collections -->
+<section class="featured-collections py-5 fade-in">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <span class="subtitle">EXPLORE</span>
+            <h2 class="section-title">Featured Collections</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="collection-card">
+                    <div class="collection-image">
+                        <img src="{% static 'core/image/men/men2.jpg' %}" alt="Men's Collection">
+                        <div class="collection-overlay">
+                            <div class="hover-content">
+                                <span class="category-tag">MEN</span>
+                                <h3>Men's Collection</h3>
+                                <p>Discover our premium selection for men</p>
+                                <a href="{% url 'mencategories' %}" class="btn-shop">
+                                    Shop Men's <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="collection-card">
+                    <div class="collection-image">
+                        <img src="{% static 'core/image/women shoes/lad1.jpg' %}" alt="Women's Collection">
+                        <div class="collection-overlay">
+                            <div class="hover-content">
+                                <span class="category-tag">WOMEN</span>
+                                <h3>Women's Collection</h3>
+                                <p>Explore our stylish women's range</p>
+                                <a href="{% url 'womencategories' %}" class="btn-shop">
+                                    Shop Women's <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="collection-card">
+                    <div class="collection-image">
+                        <img src="{% static 'core/image/kids/kids.avif' %}" alt="Kids Collection">
+                        <div class="collection-overlay">
+                            <div class="hover-content">
+                                <span class="category-tag">KIDS</span>
+                                <h3>Kids Collection</h3>
+                                <p>Perfect shoes for little feet</p>
+                                <a href="{% url 'kidscategories' %}" class="btn-shop">
+                                    Shop Kid's <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row">
-        <div class="col-md-4 slide-in-left">
-            <div class="card">
-                <img src="{% static 'core/image/carousel/men shoes.png' %}" class="card-img-top" alt="Men's Shoes">
-                <div class="card-body">
-                    <h5 class="card-title">Men's Shoes</h5>
-                    <p class="card-text">Explore our latest collection of men's shoes.</p>
-                    <a href="{% url 'mencategories' %}" class="btn btn-primary">Shop Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 slide-in-right">
-            <div class="card">
-                <img src="{% static 'core/image/women shoes/OIP.jpg' %}" class="card-img-top" alt="Women's Shoes">
-                <div class="card-body">
-                    <h5 class="card-title">Women's Shoes</h5>
-                    <p class="card-text">Discover trendy and elegant shoes for women.</p>
-                    <a href="{% url 'womencategories' %}" class="btn btn-primary">Shop Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 slide-in-right">
-            <div class="card">
-                <img src="{% static 'core/image/kids/kids.jpg' %}" class="card-img-top" alt="Kid's Shoes">
-                <div class="card-body">
-                    <h5 class="card-title">Kid's Shoes</h5>
-                    <p class="card-text">Discover trendy and elegant shoes for Kids.</p>
-                    <a href="{% url 'kidscategories' %}" class="btn btn-primary">Shop Now</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
+{% include 'core/banner.html' %}
+{% include 'core/featurette.html' %}
+<style>
+/* Enhanced Featured Collections Styles */
+.section-header {
+    margin-bottom: 60px;
+}
 
-{% include "core/carousel.html" %}
+.section-header .subtitle {
+    display: block;
+    font-size: 1rem;
+    color: #00ffff;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.collection-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collection-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+}
+
+.collection-image {
+    position: relative;
+    padding-top: 125%; /* Aspect ratio 4:5 */
+}
+
+.collection-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+.collection-card:hover img {
+    transform: scale(1.1);
+}
+
+.collection-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+    display: flex;
+    align-items: flex-end;
+    padding: 30px;
+    transition: all 0.4s ease;
+}
+
+.collection-card:hover .collection-overlay {
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.9) 100%
+    );
+}
+
+.hover-content {
+    transform: translateY(20px);
+    opacity: 0.8;
+    transition: all 0.4s ease;
+}
+
+.collection-card:hover .hover-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.category-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #00ffff;
+    color: #1a1a1a;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.hover-content h3 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.hover-content p {
+    color: #a0e6e6;
+    margin-bottom: 20px;
+}
+
+.btn-shop {
+    color: #00ffff;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-shop:hover {
+    color: #ffffff;
+    gap: 15px;
+}
+
+.btn-shop i {
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-shop:hover i {
+    transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+    .collection-image {
+        padding-top: 100%; /* Square aspect ratio for mobile */
+    }
+    
+    .hover-content h3 {
+        font-size: 1.5rem;
+    }
+}
+/* Update these color-related styles */
+.section-title {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.view-all-btn {
+    color: #007bff;
+    border: 2px solid #007bff;
+}
+
+.view-all-btn:hover {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    border-color: transparent;
+}
+
+.product-card:hover {
+    box-shadow: 0 15px 30px rgba(0, 123, 255, 0.2);
+}
+
+.brand {
+    color: #007bff;
+}
+
+.quick-add-btn {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+}
+
+.category-tag {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+}
+
+.btn-shop {
+    color: #007bff;
+}
+
+.btn-shop:hover {
+    color: #00ff88;
+}
+</style>
 
 
-{% include "core/featurette.html" %}
-
-
-{% endblock content %}
+{% endblock %}

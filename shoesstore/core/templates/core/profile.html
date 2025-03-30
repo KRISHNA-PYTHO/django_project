@@ -1,82 +1,292 @@
 {% extends "core/base.html" %}
-
 {% block content %}
-<div class="container-fluid-profile">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-2 d-none d-md-block sidebar">
-            <nav>
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{% url 'profile' %}">
-                                <i class="fas fa-home"></i>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'changepassword' %}">
-                                <i class="fas fa-key"></i>
-                                Change Password
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'viewcart' %}">
-                                <i class="fas fa-shopping-cart"></i>
-                                Cart
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'address' %}">
-                                <i class="fas fa-map-marker-alt"></i>
-                                Address
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+
+<div class="dashboard-container">
+    <div class="sidebar">
+        <div class="user-info">
+            <div class="user-avatar">{{ request.user.username|make_list|first }}</div>
+            <h3>{{ request.user.username }}</h3>
+        </div>
+        
+        <nav class="menu-links">
+            <a href="{% url 'profile' %}" class="menu-item active">
+                <i class="fas fa-user-circle"></i>
+                <span>Profile</span>
+            </a>
+            <a href="{% url 'changepassword' %}" class="menu-item">
+                <i class="fas fa-key"></i>
+                <span>Password</span>
+            </a>
+            <a href="{% url 'viewcart' %}" class="menu-item">
+                <i class="fas fa-shopping-bag"></i>
+                <span>My Cart</span>
+            </a>
+            <a href="{% url 'address' %}" class="menu-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Addresses</span>
+            </a>
+            <a href="{% url 'orders' %}" class="menu-item">
+                <i class="fas fa-box"></i>
+                <span>Orders</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>My Profile</h1>
+            <p>Manage your personal information</p>
         </div>
 
-        <!-- Profile Form -->
-        <div class="col-md-8">
-            <div class="container profile-form">
-                <div class="reg">
-                    <h3 class="text-primary">Profile</h3>
-                </div>
-                <form action="" method="POST" novalidate>
-                    {% csrf_token %}
-
-                    {% if mf.non_field_errors %}
-                        {% for error in mf.non_field_errors %}
-                            <div class="alert alert-danger">{{ error }}</div>
-                        {% endfor %}
-                    {% endif %}
-
-                    {% for m in mf %}
-                    <div class="form-group mr-4 ml-4">
-                        {{ m.label_tag }}
-                        {{ m }}
-                        {% if m.errors %}
-                            <div class="text-danger">{{ m.errors }}</div>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-
-                    <div class="text-center">
-                        <input type="submit" value="Save" class="btn btn-success register-button">
-                    </div>
-                </form>
-            </div>
-
-            <!-- Messages -->
+        <div class="profile-card">
             {% if messages %}
                 {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} mt-3">
+                    <div class="alert alert-{{ message.tags }}">
+                        <i class="fas fa-info-circle"></i>
                         {{ message }}
                     </div>
                 {% endfor %}
             {% endif %}
+
+            <form method="POST" novalidate class="profile-form">
+                {% csrf_token %}
+                
+                {% if mf.non_field_errors %}
+                    {% for error in mf.non_field_errors %}
+                        <div class="form-error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="form-grid">
+                    {% for field in mf %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-error">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i>
+                        Save Changes
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+<style>
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+    background: #f8f9fa;
+}
+
+.sidebar {
+    background: white;
+    padding: 30px;
+    border-right: 1px solid #eee;
+}
+
+.user-info {
+    text-align: center;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 15px;
+    text-transform: uppercase;
+}
+
+.user-info h3 {
+    color: #333;
+    margin: 0;
+    font-size: 18px;
+}
+
+.menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    color: #666;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.menu-item i {
+    font-size: 20px;
+    width: 24px;
+}
+
+.menu-item:hover {
+    background: linear-gradient(45deg, #007bff10, #00ff8810);
+    color: #007bff;
+}
+
+.menu-item.active {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    color: white;
+}
+
+.main-content {
+    padding: 40px;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    margin: 0;
+    color: #333;
+    font-size: 28px;
+}
+
+.page-header p {
+    color: #666;
+    margin: 5px 0 0;
+}
+
+.profile-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.05);
+}
+
+.alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #007bff10, #00ff8810);
+    color: #007bff;
+}
+
+.form-error {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background: #fff5f5;
+    color: #ff4444;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group label {
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input {
+    padding: 12px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+}
+
+.field-error {
+    color: #ff4444;
+    font-size: 14px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.save-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+}
+
+@media (max-width: 1024px) {
+    .dashboard-container {
+        grid-template-columns: 240px 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 {% endblock content %}

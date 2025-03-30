@@ -1,0 +1,176 @@
+/* Main Navbar */
+.navbar {
+    padding: 0.3rem 0;
+    background: linear-gradient(to right, #1a1a1a, #2c3847) !important;
+}
+
+.container-fluid {
+    padding: 0 1rem;
+}
+
+/* Logo */
+.navbar-brand {
+    padding: 0;
+    margin-right: 1rem;
+}
+
+.navbar-brand img {
+    height: 35px;
+    transition: transform 0.2s;
+}
+
+/* Location Section */
+.fa-map-marker-alt {
+    color: #ff9900;
+    font-size: 1.1rem;
+    margin-right: 0.3rem;
+}
+
+.small {
+    font-size: 0.8rem;
+    line-height: 1.1;
+}
+
+/* Search Bar */
+.input-group {
+    max-width: 650px;
+}
+
+.form-select {
+    max-width: 100px !important;
+    background-color: #f8f9fa;
+}
+
+.form-control {
+    height: 40px;
+}
+
+.btn-warning {
+    background-color: #ff9900;
+    border-color: #ff9900;
+    padding: 0.375rem 1rem;
+}
+
+/* Right Menu Items */
+.d-flex.align-items-center > * {
+    margin: 0 0.5rem;
+}
+
+.btn-dark {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+/* Cart Badge */
+.position-relative .badge {
+    padding: 0.25em 0.6em;
+    font-size: 0.75rem;
+    background-color: #ff9900 !important;
+}
+
+/* Secondary Navigation */
+.bg-dark-secondary {
+    background-color: #232f3e !important;
+    padding: 0;
+}
+
+.navbar-nav {
+    gap: 0.5rem;
+}
+
+.nav-link {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* Dropdown Styling */
+.dropdown-menu {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0;
+    min-width: 200px;
+    border-radius: 4px;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* Hover Effects */
+.nav-link:hover {
+    color: #ff9900 !important;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.btn-warning:hover {
+    background-color: #ff8c00;
+    border-color: #ff8c00;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 992px) {
+    .navbar-nav {
+        padding: 0.5rem 0;
+    }
+    
+    .nav-item {
+        padding: 0.25rem 0;
+    }
+    
+    .input-group {
+        margin: 0.5rem 0;
+    }
+    
+    .d-flex.align-items-center {
+        margin-top: 0.5rem;
+    }
+}
+
+/* Custom Scrollbar for Dropdown */
+.navbar-nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.navbar-nav::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.navbar-nav::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+/* Additional Enhancements */
+.navbar-toggler {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* Language Selector */
+.dropdown button img {
+    margin-right: 0.3rem;
+}
+
+/* Orders Button */
+.btn-dark .small {
+    text-align: center;
+}
+
+/* Cart Icon */
+.fa-shopping-cart {
+    font-size: 1.2rem !important;
+}
+
+.navbar-brand h3{
+font-size: 27px;
+margin-bottom: 10px;
+font-weight: 700;
+background: linear-gradient(45deg, #007bff, #00ff88);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}

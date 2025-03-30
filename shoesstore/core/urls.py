@@ -1,11 +1,6 @@
 from django.urls import path
 from . import views
 
-#------ To include Media file ---------------
-from django.conf import settings
-from django.conf.urls.static import static
-#-----------------------------------------------
-
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
@@ -55,8 +50,5 @@ urlpatterns = [
     path('forgotpassword/', views.forgot_password, name="forgotpassword"),
     path('reset_password/<uidb64>/<token>/', views.reset_password, name='resetpassword'),
     path('password_reset_done/', views.password_reset_done, name='passwordresetdone'),
+    path('products/', views.all_products, name='allproducts'),
 ]
-
-#--------- This will add file to media folder -----------
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

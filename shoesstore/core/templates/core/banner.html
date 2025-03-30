@@ -1,0 +1,228 @@
+{% load static %}
+
+<section class="promo-banner">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="banner-content">
+                    <span class="limited-offer">LIMITED TIME OFFER</span>
+                    <h1 class="banner-title">Premium Running Collection</h1>
+                    <p class="banner-text">Experience ultimate comfort with our new cushioning technology. Up to 40% off on selected styles.</p>
+                    <div class="banner-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Advanced Cushioning</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Breathable Mesh</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Anti-Slip Grip</span>
+                        </div>
+                    </div>
+                    <div class="banner-cta">
+                        <a href="#" class="shop-now-btn">Shop Now</a>
+                        <div class="offer-timer">
+                            <span>Ends in:</span>
+                            <div id="countdown" class="countdown">48:00:00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="banner-image">
+                    <img src="{% static 'core/image/banner/running-shoe.png' %}" alt="Premium Running Shoe" class="floating">
+                    <div class="price-tag">
+                        <span class="discount">40% OFF</span>
+                        <span class="price">₹4,999</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.promo-banner {
+    padding: 80px 0;
+    background: #1a1a1a;
+    position: relative;
+    overflow: hidden;
+}
+
+.promo-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0, 123, 255, 0.1), rgba(0, 255, 136, 0.1));
+    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.limited-offer {
+    display: inline-block;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    padding: 8px 20px;
+    border-radius: 25px;
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.banner-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+.banner-text {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.banner-features {
+    margin-bottom: 30px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.feature-item i {
+    color: #00ff88;
+}
+
+.feature-item span {
+    color: #ffffff;
+}
+
+.banner-cta {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.shop-now-btn {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.shop-now-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.3);
+    color: #fff;
+}
+
+.offer-timer {
+    color: #ffffff;
+}
+
+.countdown {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #00ff88;
+}
+
+.banner-image {
+    position: relative;
+    text-align: center;
+}
+
+.floating {
+    animation: floating 3s ease-in-out infinite;
+    max-width: 100%;
+    height: auto;
+}
+
+.price-tag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    padding: 15px;
+    border-radius: 15px;
+    color: #fff;
+    text-align: center;
+}
+
+.discount {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.price {
+    display: block;
+    font-size: 1.2rem;
+}
+
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+@media (max-width: 992px) {
+    .banner-title {
+        font-size: 2.5rem;
+    }
+    
+    .banner-image {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .promo-banner {
+        padding: 60px 0;
+    }
+    
+    .banner-cta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+}
+</style>
+
+<script>
+// Simple countdown timer
+function updateCountdown() {
+    const countdownEl = document.getElementById('countdown');
+    let time = countdownEl.innerHTML;
+    let [hours, minutes, seconds] = time.split(':').map(Number);
+    
+    setInterval(() => {
+        if (seconds > 0) {
+            seconds--;
+        } else if (minutes > 0) {
+            minutes--;
+            seconds = 59;
+        } else if (hours > 0) {
+            hours--;
+            minutes = 59;
+            seconds = 59;
+        }
+        
+        countdownEl.innerHTML = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }, 1000);
+}
+
+document.addEventListener('DOMContentLoaded', updateCountdown);
+</script>

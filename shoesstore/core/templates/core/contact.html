@@ -1,84 +1,206 @@
-{% extends "core/base.html" %}
+{% extends 'core/base.html' %}
+{% load static %}
 
-{% block title %}Contact Us - ShoeStore{% endblock title %}
+{% block title %}Contact Us | Senikersku{% endblock %}
 
 {% block content %}
-
-<!-- Contact Section -->
-<section class="contact-section bg-light py-5">
+<!-- Hero Section -->
+<section class="contact-hero">
     <div class="container">
         <div class="text-center mb-5">
-            <h1 class="display-4">Contact Us</h1>
-            <p class="lead">Have questions or feedback? We'd love to hear from you!</p>
+            <h1 class="display-4 fw-bold">Contact Us</h1>
+            <p class="lead">Have a question? We'd love to hear from you.</p>
         </div>
-
-        <div class="row">
-            <!-- Contact Form -->
-            <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h3 class="card-title mb-4">Send Us a Message</h3>
-                        <form method="post" action="{% url 'contact' %}">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="name">Your Name</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Your Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="subject">Subject</label>
-                                <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Your Message</label>
-                                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Enter your message" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block">Send Message</button>
-                        </form>
+        
+        <!-- Contact Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <div class="icon-box">
+                        <i class="fas fa-map-marker-alt"></i>
                     </div>
+                    <h3>Visit Us</h3>
+                    <p>Senikersku Store<br>Jl. Raya Darmo Permai III No.36<br>Surabaya, Indonesia</p>
                 </div>
             </div>
-
-            <!-- Contact Information -->
-            <div class="col-md-6 mt-4 mt-md-0">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h3 class="card-title mb-4">Our Contact Information</h3>
-                        <ul class="list-unstyled">
-                            <li class="mb-3">
-                                <i class="fas fa-map-marker-alt fa-lg text-primary mr-2"></i>
-                                <strong>Address:</strong> 123 Shoe Street, Fashion City, FC 12345
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-phone fa-lg text-primary mr-2"></i>
-                                <strong>Phone:</strong> +1 (123) 456-7890
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-envelope fa-lg text-primary mr-2"></i>
-                                <strong>Email:</strong> info@shoestore.com
-                            </li>
-                            <li class="mb-3">
-                                <i class="fas fa-clock fa-lg text-primary mr-2"></i>
-                                <strong>Working Hours:</strong> Mon - Fri: 9 AM - 6 PM
-                            </li>
-                        </ul>
-                        <hr>
-                        <h5 class="mt-4">Follow Us</h5>
-                        <div class="social-links">
-                            <a href="#" class="btn btn-outline-primary btn-sm mr-2"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="btn btn-outline-primary btn-sm mr-2"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="btn btn-outline-primary btn-sm mr-2"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="btn btn-outline-primary btn-sm"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <div class="icon-box">
+                        <i class="fas fa-envelope"></i>
                     </div>
+                    <h3>Email Us</h3>
+                    <p>cs@senikersku.com<br>support@senikersku.com</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card">
+                    <div class="icon-box">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>Call Us</h3>
+                    <p>+62 822-4554-8448<br>Monday - Sunday: 10:00 - 22:00</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form & Map -->
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="contact-form-card">
+                    <h2 class="mb-4">Send Message</h2>
+                    <form id="contactForm">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                            <label for="name">Your Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                            <label for="email">Your Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="subject" placeholder="Subject" required>
+                            <label for="subject">Subject</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="message" style="height: 150px" placeholder="Message" required></textarea>
+                            <label for="message">Message</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-3">
+                            Send Message <i class="fas fa-paper-plane ms-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="map-card">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.6803737665247!2d112.7261663!3d-7.278898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fc1399feb9c3%3A0x641c8df6d3f4f1d9!2sSenikersku!5e0!3m2!1sen!2sid!4v1701234567890!5m2!1sen!2sid"
+                        width="100%" 
+                        height="450" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- End Contact Section -->
 
-{% endblock content %}
+<style>
+.contact-hero {
+    padding: 80px 0;
+    background-color: #f8f9fa;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.contact-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.icon-box {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+}
+
+.icon-box i {
+    font-size: 32px;
+    color: white;
+}
+
+.contact-form-card, .map-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.form-control {
+    border: 2px solid #e9ecef;
+    padding: 0.75rem;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.1);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    border: none;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+}
+
+.map-card {
+    overflow: hidden;
+}
+
+.map-card iframe {
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .contact-hero {
+        padding: 60px 0;
+    }
+    
+    .contact-form-card, .map-card {
+        padding: 20px;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Form submission logic
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+        
+        // Success message
+        Swal.fire({
+            title: 'Message Sent!',
+            text: 'Thank you for contacting us. We will get back to you soon.',
+            icon: 'success',
+            confirmButtonColor: '#007bff'
+        });
+        
+        form.reset();
+    });
+});
+</script>
+{% endblock %}
