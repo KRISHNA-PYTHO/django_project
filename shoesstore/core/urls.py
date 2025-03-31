@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -34,21 +37,19 @@ urlpatterns = [
     
     # Checkout and Payment
     path('checkout/', views.checkout, name='checkout'),
-    path('payment_success/<int:selected_address_id>/', views.payment_success, name='paymentsuccess'),
-    path('payment_failed/', views.payment_failed, name='paymentfailed'),
-    path('payment/', views.payment, name='payment'),
     
-    # Order History
-    path('order-tracking/<int:order_id>/', views.order_tracking, name='order'),
     
-    # Buy Now Functionality
+    # Payment URLs
+    # Buy Now URLs
     path('buynow/<int:id>/', views.buynow, name='buynow'),
-    path('buynow_payment/<int:id>/', views.buynow_payment, name='buynowpayment'),
-    path('buynow_payment_success/<int:selected_address_id>/<int:id>/', views.buynow_payment_success, name='buynowpaymentsuccess'),
+    path('buynow-payment/<int:id>/', views.buynow_payment, name='buynowpayment'),
+    path('buynow-payment-success/<int:selected_address_id>/<int:id>/', views.buynow_payment_success, name='buynowpaymentsuccess'),
     
-    # Forgot Password
-    path('forgotpassword/', views.forgot_password, name="forgotpassword"),
-    path('reset_password/<uidb64>/<token>/', views.reset_password, name='resetpassword'),
-    path('password_reset_done/', views.password_reset_done, name='passwordresetdone'),
-    path('products/', views.all_products, name='allproducts'),
+    # Regular Payment URLs
+    path('payment/', views.payment, name='payment'),
+    path('payment-success/<int:selected_address_id>/', views.payment_success, name='paymentsuccess'),
+    path('payment-failed/', views.payment_failed, name='paymentfailed'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

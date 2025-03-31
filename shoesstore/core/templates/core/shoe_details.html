@@ -15,7 +15,11 @@
         <!-- Product Images -->
         <div class="product-images">
             <div class="main-image">
-                <img src="{{ shoe.shoe_image.url }}" alt="{{ shoe.name }}">
+                {% if shoe.shoe_image %}
+                    <img src="{{ shoe.shoe_image.url }}" alt="{{ shoe.name }}">
+                {% else %}
+                    <img src="{% static 'images/default-shoe.jpg' %}" alt="{{ shoe.name }}">
+                {% endif %}
                 <div class="image-tag">{{ shoe.discount_percentage }}% OFF</div>
             </div>
         </div>
@@ -31,6 +35,10 @@
             </div>
 
             <div class="product-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Brand:</span>
+                    <span class="meta-value">{{ shoe.brand }}</span>
+                </div>
                 <div class="meta-item">
                     <span class="meta-label">Color:</span>
                     <span class="meta-value">{{ shoe.get_colour_display }}</span>
@@ -272,7 +280,7 @@ function updateQty(change) {
 }
 </script>
 <!-- Add this after the product-features section -->
-
+    
     <div class="product-highlights">
         <h4>Product Highlights</h4>
         <ul>

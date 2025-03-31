@@ -1,158 +1,322 @@
-{% extends 'core/base.html' %}
-{% load static %}
-
-{% block title %}Login | Senikersku{% endblock %}
-
+{% extends "core/base.html" %}
 {% block content %}
-<section class="login-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="login-card">
-                    <div class="text-center mb-4">
-                        <img src="{% static 'core/image/logo.png' %}" alt="Senikersku" class="login-logo">
-                        <h2 class="mt-3">Welcome Back</h2>
-                        <p class="text-muted">Please login to your account</p>
-                    </div>
 
-                    <form method="post" class="login-form">
-                        {% csrf_token %}
-                        
-                        {% if messages %}
-                        <div class="alert alert-danger" role="alert">
-                            {% for message in messages %}
-                                {{ message }}
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-                            <label for="username">Username</label>
-                        </div>
-
-                        <div class="form-floating mb-3 password-field">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                            <label for="password">Password</label>
-                            <button type="button" class="btn-toggle-password" onclick="togglePassword()">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-
-                        <div class="d-flex justify-content-between mb-4">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="remember">
-                                <label class="form-check-label" for="remember">Remember me</label>
-                            </div>
-                            <a href="{% url 'password_reset' %}" class="text-primary">Forgot password?</a>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
-                        
-                        <div class="text-center">
-                            <p class="mb-0">Don't have an account? <a href="{% url 'registration' %}" class="text-primary">Sign up</a></p>
-                        </div>
-                    </form>
-                </div>
+<div class="login-container">
+    <div class="login-card">
+        <div class="form-header">
+            <div class="logo-circle">
+                <i class="fas fa-sign-in-alt"></i>
             </div>
+            <h1>Welcome Back</h1>
+            <p>Sign in to your account</p>
         </div>
+
+        <form method="POST" class="login-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <input type="text" id="username" name="username" required>
+                <label for="username">Username</label>
+            </div>
+
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <input type="password" id="password" name="password" required>
+                <label for="password">Password</label>
+                <button type="button" class="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember">
+                    <span class="checkmark"></span>
+                    Remember me
+                </label>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+            </div>
+
+            
+
+            <button type="submit" class="login-btn">
+                <span class="btn-text">Sign In</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+            <div class="register-link">
+                Don't have an account? 
+                <a href="{% url 'registration' %}">Register here</a>
+            </div>
+        </form>
     </div>
-</section>
+</div>
 
 <style>
-.login-section {
+.login-container {
     min-height: 100vh;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 80px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(45deg, rgba(0, 123, 255, 0.05), rgba(0, 255, 136, 0.05));
 }
 
 .login-card {
     background: white;
-    padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
 }
 
-.login-logo {
-    height: 60px;
-    object-fit: contain;
+.form-header {
+    text-align: center;
+    margin-bottom: 40px;
 }
 
-.password-field {
+.logo-circle {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.logo-circle i {
+    font-size: 32px;
+    color: white;
+}
+
+.form-header h1 {
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+.form-group {
     position: relative;
+    margin-bottom: 25px;
 }
 
-.btn-toggle-password {
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #007bff;
+    z-index: 1;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px 20px 15px 45px;
+    border: 2px solid #eee;
+    border-radius: 15px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.form-group label {
+    position: absolute;
+    left: 45px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.form-group input:focus ~ label,
+.form-group input:valid ~ label {
+    top: -12px;
+    left: 15px;
+    font-size: 14px;
+    background: white;
+    padding: 0 5px;
+    color: #007bff;
+}
+
+.toggle-password {
     position: absolute;
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: #6c757d;
+    color: #666;
     cursor: pointer;
     padding: 0;
 }
 
-.btn-toggle-password:hover {
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.forgot-password {
     color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
 }
 
-.form-floating > .form-control {
-    height: calc(3.5rem + 2px);
-    padding: 1rem 0.75rem;
+.forgot-password:hover {
+    color: #00ff88;
 }
 
-.form-floating > .form-control:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.1);
-}
-
-.btn-primary {
+.login-btn {
+    width: 100%;
+    padding: 15px;
     background: linear-gradient(45deg, #007bff, #00ff88);
     border: none;
-    padding: 12px;
+    border-radius: 15px;
+    color: white;
+    font-size: 16px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+}
+
+.login-btn::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+.login-btn:hover::after {
+    left: 100%;
+}
+
+.divider {
+    text-align: center;
+    margin: 25px 0;
+    position: relative;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: #eee;
+}
+
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+.divider span {
+    background: white;
+    padding: 0 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+.social-login {
+    margin-bottom: 25px;
+}
+
+.google-btn {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    border: 2px solid #eee;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,123,255,0.3);
-}
-
-.form-check-input:checked {
-    background-color: #007bff;
+.google-btn:hover {
     border-color: #007bff;
+    color: #007bff;
 }
 
-@media (max-width: 768px) {
-    .login-section {
-        padding: 40px 0;
-    }
-    
+.register-link {
+    text-align: center;
+    color: #666;
+}
+
+.register-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link a:hover {
+    color: #00ff88;
+}
+
+@media (max-width: 576px) {
     .login-card {
-        padding: 30px;
-        margin: 0 15px;
+        padding: 30px 20px;
     }
 }
 </style>
 
 <script>
-function togglePassword() {
-    const passwordInput = document.getElementById('password');
-    const toggleButton = document.querySelector('.btn-toggle-password i');
-    
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleButton.classList.remove('fa-eye');
-        toggleButton.classList.add('fa-eye-slash');
-    } else {
-        passwordInput.type = 'password';
-        toggleButton.classList.remove('fa-eye-slash');
-        toggleButton.classList.add('fa-eye');
-    }
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const togglePassword = document.querySelector('.toggle-password');
+    const passwordInput = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.querySelector('i').classList.toggle('fa-eye');
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+});
 </script>
-{% endblock %}
+
+{% endblock content %}

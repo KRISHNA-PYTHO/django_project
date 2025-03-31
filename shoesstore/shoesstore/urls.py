@@ -1,5 +1,7 @@
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from core import views
 from django.contrib.auth import views as auth_views
 
@@ -63,4 +65,5 @@ urlpatterns = [
     path('reset_password/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset_password/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('paypal/', include('paypal.standard.ipn.urls')),
-]
+    path('social-auth/', include('social_django.urls', namespace='social')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

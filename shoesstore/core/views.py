@@ -82,7 +82,7 @@ def registration(request):
                     send_mail(
                         'Registration Successful',
                         f'Thank you for choosing us!!',
-                        'maurya1389@gmail.com',  # Use a verified email address
+                        'krishpytho1389@gmail.com',  # Use a verified email address
                         fail_silently=False,
                     )
                 return redirect('registration')
@@ -228,58 +228,70 @@ def delete_address(request, id):
 # ============================== Checkout Page ==============================
 
 def checkout(request):
-    cart_items = Cart.objects.filter(user=request.user)  # cart_items will fetch product of current user, and show product available in the cart of the current user.
-    total = 0
-    delivery_charge = 100
+    cart_items = Cart.objects.filter(user=request.user)      # cart_items will fetch product of current user, and show product available in the cart of the current user.
+    total =0
+    delhivery_charge =100
     for item in cart_items:
         item.product.price_and_quantity_total = item.product.discounted_price * item.quantity
         total += item.product.price_and_quantity_total
-    final_price = delivery_charge + total
-
+    final_price= delhivery_charge + total
+    
     address = CustomerDetail.objects.filter(user=request.user)
 
-    return render(request, 'core/checkout.html',
-                  {'cart_items': cart_items, 'total': total, 'final_price': final_price, 'address': address, })
+    return render(request, 'core/checkout.html', {'cart_items': cart_items,'total':total,'final_price':final_price,'address':address})
+
+# ============================== payment Page ==============================
 
 
 def payment(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
     if request.method == 'POST':
         selected_address_id = request.POST.get('selected_address')
+        if not selected_address_id:
+            messages.error(request, 'Please select a delivery address')
+            return redirect('checkout')
+        
+        cart_items = Cart.objects.filter(user=request.user)
+        if not cart_items.exists():
+            messages.error(request, 'Your cart is empty')
+            return redirect('viewcart')
+        
+        total = 0
+        delivery_charge = 100
+        for item in cart_items:
+            item.product.price_and_quantity_total = item.product.discounted_price * item.quantity
+            total += item.product.price_and_quantity_total
+        final_price = delivery_charge + total
 
-    cart_items = Cart.objects.filter(user=request.user)  # cart_items will fetch product of current user, and show product available in the cart of the current user.
-    total = 0
-    delivery_charge = 100
-    for item in cart_items:
-        item.product.price_and_quantity_total = item.product.discounted_price * item.quantity
-        total += item.product.price_and_quantity_total
-    final_price = delivery_charge + total
+        final_price_usd = "{:.2f}".format(float(final_price) / 82.0)
 
-    address = CustomerDetail.objects.filter(user=request.user)
+        paypal_dict = {
+            'business': settings.PAYPAL_RECEIVER_EMAIL,
+            'amount': final_price_usd,
+            'item_name': 'Cart Payment',
+            'invoice': str(uuid.uuid4()),
+            'currency_code': 'USD',
+            'notify_url': request.build_absolute_uri(reverse('paypal-ipn')),
+            'return_url': request.build_absolute_uri(reverse('paymentsuccess', kwargs={'selected_address_id': selected_address_id})),
+            'cancel_return': request.build_absolute_uri(reverse('paymentfailed')),
+        }
 
-    # ============== Paypal Code =====================
+        paypal_payment = PayPalPaymentsForm(initial=paypal_dict)
+        return render(request, 'core/payment.html', {
+            'paypal': paypal_payment,
+            'final_price': final_price,
+            'final_price_usd': final_price_usd,
+            'selected_address_id': selected_address_id,
+            'cart_items': cart_items,
+        })
+    
+    return redirect('checkout')
 
-    host = request.get_host()  # Will fetch the domain site is currently hosted on.
 
-    paypal_checkout = {
-        'business': settings.PAYPAL_RECEIVER_EMAIL,  # This is typically the email address associated with the PayPal account that will receive the payment.
-        'amount': final_price,  # : The amount of money to be charged for the transaction.
-        'item_name': 'Shoe',  # Describes the item being purchased.
-        'invoice': uuid.uuid4(),  # A unique identifier for the invoice. It uses uuid.uuid4() to generate a random UUID.
-        'currency_code': 'USD',
-        'notify_url': f"http://{host}{reverse('paypal-ipn')}",
-        # The URL where PayPal will send Instant Payment Notifications (IPN) to notify the merchant about payment-related events
-        'return_url': f"http://{host}{reverse('paymentsuccess', args=[selected_address_id])}",
-        # The URL where the customer will be redirected after a successful payment.
-        'cancel_url': f"http://{host}{reverse('paymentfailed')}",
-        # The URL where the customer will be redirected if they choose to cancel the payment.
-    }
-
-    paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
-
-    # =============== Paypal Code  End =====================
-
-    return render(request, 'core/payment.html', {'paypal': paypal_payment})
-
+#
+  
 
 # ==================== Payment Success Page =====================================
 def payment_success(request, selected_address_id):
@@ -292,8 +304,8 @@ def payment_success(request, selected_address_id):
 
     send_mail(
         'Order successfully Placed',
-        f'Click the following link to reset your p',
-        'fordjangoproject@gmail.com',  # Use a verified email address
+        f'Your Order is Booking Sucessfully',
+        'krishpytho1389@gmail.com',  # Use a verified email address
         [request.user.email],
         fail_silently=False,
     )
@@ -324,58 +336,83 @@ def order_tracking(request, order_id):
     }
     return render(request, 'core/order.html', context)
 # ========================================== Buy Now ========================================================
+
 def buynow(request, id):
-    shoe = Shoes.objects.get(pk=id)  # cart_items will fetch product of current user, and show product available in the cart of the current user.
+    if not request.user.is_authenticated:
+        return redirect('login')
+        
+    shoe = Shoes.objects.get(pk=id)
     delivery_charge = 100
     final_price = delivery_charge + shoe.discounted_price
-
+    
+    # Set default quantity for buy now
+    shoe.quantity = 1
+    # Calculate total for single item
+    shoe.total = shoe.discounted_price * shoe.quantity
+    
     address = CustomerDetail.objects.filter(user=request.user)
+    if not address.exists():
+        messages.warning(request, 'Please add a delivery address first')
+        return redirect('address')
 
-    return render(request, 'core/buynow.html', {'final_price': final_price, 'address': address, 'shoe': shoe})
+    return render(request, 'core/buynow.html', {
+        'final_price': final_price,
+        'address': address,
+        'shoe': shoe,
+        'delivery_charge': delivery_charge
+    })
 
 
-def buynow_payment(request, id):
+def buynow_payment(request,id):
+
     if request.method == 'POST':
         selected_address_id = request.POST.get('buynow_selected_address')
 
-    shoe = Shoes.objects.get(pk=id)  # cart_items will fetch product of current user, and show product available in the cart of the current user.
-    delivery_charge = 2000
-    final_price = delivery_charge + shoe.discounted_price
-
+    Shoe = Shoes.objects.get(pk=id)     # cart_items will fetch product of current user, and show product available in the cart of the current user.
+    delhivery_charge =100
+    final_price= delhivery_charge + Shoe.discounted_price
+    
     address = CustomerDetail.objects.filter(user=request.user)
-    # ================= Paypal Code ======================================
+    #================= Paypal Code ======================================
 
-    host = request.get_host()  # Will fetch the domain site is currently hosted on.
+    host = request.get_host()   # Will fecth the domain site is currently hosted on.
 
     paypal_checkout = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
         'amount': final_price,
-        'item_name': 'Shoe',
+        'item_name': 'Shoes',
         'invoice': uuid.uuid4(),
         'currency_code': 'USD',
         'notify_url': f"http://{host}{reverse('paypal-ipn')}",
-        'return_url': f"http://{host}{reverse('buynowpaymentsuccess', args=[selected_address_id, id])}",
+        'return_url': f"http://{host}{reverse('buynowpaymentsuccess', args=[selected_address_id,id])}",
         'cancel_url': f"http://{host}{reverse('paymentfailed')}",
     }
 
     paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
 
-    # ========================================================================
+    #========================================================================
 
-    return render(request, 'core/payment.html',
-                  {'final_price': final_price, 'address': address, 'shoe': shoe, 'paypal': paypal_payment})
+    return render(request, 'core/payment.html', {'final_price':final_price,'address':address,'Shoe':Shoe,'paypal':paypal_payment})
+
+
 
 
 def buynow_payment_success(request, selected_address_id, id):
-    print('payment success', selected_address_id)  # we have fetch this id from return_url': f"http://{host}{reverse('paymentsuccess', args=[selected_address_id])}
-    # This id contain address detail of particular customer
     user = request.user
-    customer_data = CustomerDetail.objects.get(pk=selected_address_id, )
-
+    customer_data = CustomerDetail.objects.get(pk=selected_address_id)
     shoe = Shoes.objects.get(pk=id)
+    
     Order(user=user, customer=customer_data, shoe=shoe, quantity=1).save()
 
-    return render(request, 'core/buynow_payment_success.html')
+    send_mail(
+        'Order successfully Placed',
+        f'Your Order is Booking Sucessfully',
+        'krishpytho1389@gmail.com',  # Use a verified email address
+        [request.user.email],
+        fail_silently=False,
+    )
+    
+    return render(request, 'core/buynow_payment_success.html', {'shoe': shoe})
 
 
 # ================================== Forget Password ====================================================
@@ -391,7 +428,7 @@ def forgot_password(request):
             send_mail(
                 'Password Reset',
                 f'Click the following link to reset your password: {reset_url}',
-                'maurya1389@gmail.com',
+                'krishpytho1389@gmail.com',
                 [email],
                 fail_silently=False,
             )
@@ -426,6 +463,12 @@ def reset_password(request, uidb64, token):
 
 def password_reset_done(request):
     return render(request, 'core/password_reset_done.html')
+
+
+def product_list(request):
+    products = Product.objects.all().order_by('-created_at')
+    return render(request, 'core/product_list.html', {'products': products})
+
 
 
 def orders_list(request):

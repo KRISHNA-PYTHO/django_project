@@ -1,226 +1,249 @@
-{% extends 'core/base.html' %}
-{% load static %}
-
-{% block title %}Sign Up | Senikersku{% endblock %}
-
+{% extends "core/base.html" %}
 {% block content %}
-<section class="registration-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="registration-card">
-                    <div class="text-center mb-4">
-                        <img src="{% static 'core/image/logo.png' %}" alt="Senikersku" class="registration-logo">
-                        <h2 class="mt-3">Create Account</h2>
-                        <p class="text-muted">Join the Senikersku community</p>
-                    </div>
 
-                    <form method="post" class="registration-form">
-                        {% csrf_token %}
-                        
-                        {% if messages %}
-                        <div class="alert alert-danger" role="alert">
-                            {% for message in messages %}
-                                {{ message }}
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-                            <label for="username">Username</label>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
-                            <label for="email">Email address</label>
-                        </div>
-
-                        <div class="form-floating mb-3 password-field">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                            <label for="password">Password</label>
-                            <button type="button" class="btn-toggle-password" onclick="togglePassword('password')">
-                              
-                            </button>
-                        </div>
-
-                        <div class="form-floating mb-4 password-field">
-                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
-                            <label for="confirm_password">Confirm Password</label>
-                            <button type="button" class="btn-toggle-password" onclick="togglePassword('confirm_password')">
-                              
-                            </button>
-                        </div>
-
-                        <div class="form-check mb-4">
-                            <input type="checkbox" class="form-check-input" id="terms" required>
-                            <label class="form-check-label" for="terms">
-                                I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100 mb-3">Create Account</button>
-                        
-                        <div class="text-center">
-                            <p class="mb-0">Already have an account? <a href="{% url 'login' %}" class="text-primary">Login</a></p>
-                        </div>
-                    </form>
-                </div>
+<div class="registration-container">
+    <div class="registration-card">
+        <div class="form-header">
+            <div class="logo-circle">
+                <i class="fas fa-user-plus"></i>
             </div>
+            <h1>Create Account</h1>
+            <p>Join our community today</p>
         </div>
+
+        <form method="POST" class="registration-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="username">
+                    <i class="fas fa-user"></i>
+                    Username
+                </label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i>
+                    Email
+                </label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password1">
+                    <i class="fas fa-lock"></i>
+                    Password
+                </label>
+                <input type="password" id="password1" name="password1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password2">
+                    <i class="fas fa-lock"></i>
+                    Confirm Password
+                </label>
+                <input type="password" id="password2" name="password2" required>
+            </div>
+
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <button type="submit" class="register-btn">
+                <i class="fas fa-user-plus"></i>
+                Create Account
+            </button>
+
+            <div class="login-link">
+                Already have an account? 
+                <a href="{% url 'login' %}">Login here</a>
+            </div>
+        </form>
     </div>
-</section>
+</div>
 
 <style>
-.registration-section {
+.registration-container {
     min-height: 100vh;
-    background-color: #1a1a1a;
-    background-image: 
-        linear-gradient(rgba(26, 26, 26, 0.97), rgba(26, 26, 26, 0.97)),
-        linear-gradient(to right, rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 100% 100%, 50px 50px, 50px 50px;
-    padding: 80px 0;
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(45deg, rgba(0, 123, 255, 0.05), rgba(0, 255, 136, 0.05));
 }
 
 .registration-card {
-    background: rgba(22, 22, 22, 0.95);
+    background: white;
+    border-radius: 20px;
     padding: 40px;
-    border-radius: 12px;
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
 }
 
-h2 {
-    color: #00ffff;
+.form-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo-circle {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.logo-circle i {
     font-size: 32px;
-    font-weight: 600;
+    color: white;
 }
 
-.text-muted {
-    color: #a0e6e6 !important;
+.form-header h1 {
+    color: #333;
+    margin-bottom: 10px;
 }
 
-.form-floating > .form-control {
-    background: rgba(30, 30, 30, 0.95);
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    color: #ffffff;
-    height: 50px;
+.form-header p {
+    color: #666;
 }
 
-.form-floating > .form-control:focus {
-    background: rgba(30, 30, 30, 0.95);
-    border-color: #00ffff;
-    box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.2);
+.form-group {
+    margin-bottom: 25px;
 }
 
-.form-floating > label {
-    color: #a0e6e6;
-    padding-left: 15px;
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #666;
+    margin-bottom: 8px;
 }
 
-.btn-toggle-password {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #a0e6e6;
-    cursor: pointer;
+.form-group label i {
+    color: #007bff;
 }
 
-.btn-toggle-password:hover {
-    color: #00ffff;
-}
-
-.form-check-label {
-    color: #a0e6e6;
-}
-
-.btn-primary {
-    background: #00ffff;
-    color: #1a1a1a;
-    border: none;
-    font-weight: 600;
-    height: 45px;
+.form-group input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 2px solid #eee;
+    border-radius: 10px;
     font-size: 16px;
+    transition: all 0.3s ease;
 }
 
-.btn-primary:hover {
-    background: #00cccc;
-    color: #1a1a1a;
-    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+.form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
 }
 
-.text-primary {
-    color: #00ffff !important;
+.register-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+.login-link a {
+    color: #007bff;
     text-decoration: none;
+    font-weight: 600;
 }
 
-.text-primary:hover {
-    color: #00cccc !important;
-    text-decoration: none;
+.login-link a:hover {
+    color: #00ff88;
 }
 
-.form-check-input {
-    border: 1px solid rgba(0, 255, 255, 0.4);
+.messages {
+    margin-bottom: 20px;
 }
 
-.form-check-input:checked {
-    background-color: #00ffff;
-    border-color: #00ffff;
+.message {
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
-p {
-    color: #a0e6e6;
+.message.success {
+    background: #e8f5e9;
+    color: #00c853;
 }
 
-.alert-danger {
-    background: rgba(255, 0, 0, 0.1);
-    border-color: rgba(255, 0, 0, 0.2);
-    color: #ff6b6b;
+.message.error {
+    background: #ffebee;
+    color: #ff4444;
 }
 
-@media (max-width: 768px) {
-    .registration-section {
-        padding: 40px 0;
-    }
-    
+@media (max-width: 576px) {
     .registration-card {
-        padding: 30px;
-        margin: 0 15px;
+        padding: 30px 20px;
     }
+
+    .logo-circle {
+        width: 60px;
+        height: 60px;
+    }
+
+    .logo-circle i {
+        font-size: 24px;
+    }
+
+    .form-group input {
+        padding: 10px 15px;
+    }
+}
+
+/* Input Animation */
+@keyframes focusIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.form-group input:focus {
+    animation: focusIn 0.2s ease;
 }
 </style>
 
-<script>
-function togglePassword(inputId) {
-    const passwordInput = document.getElementById(inputId);
-    const toggleButton = passwordInput.parentElement.querySelector('.btn-toggle-password i');
-    
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleButton.classList.remove('fa-eye');
-        toggleButton.classList.add('fa-eye-slash');
-    } else {
-        passwordInput.type = 'password';
-        toggleButton.classList.remove('fa-eye-slash');
-        toggleButton.classList.add('fa-eye');
-    }
-}
+{% endblock content %}
 
-document.getElementById('confirm_password').addEventListener('input', function() {
-    const password = document.getElementById('password').value;
-    const confirmPassword = this.value;
-    
-    if (password !== confirmPassword) {
-        this.setCustomValidity('Passwords do not match');
-    } else {
-        this.setCustomValidity('');
-    }
-});
-</script>
-{% endblock %}
 

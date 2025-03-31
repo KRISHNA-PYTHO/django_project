@@ -36,7 +36,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'paypal.standard.ipn',
+    'social_django',
 ]
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'your_google_oauth2_key'  # Google Client ID
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'your_google_oauth2_secret'  # Google Client Secret
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -96,14 +105,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  
 EMAIL_PORT = 587  
 EMAIL_USE_TLS = True  
-EMAIL_HOST_USER = 'maurya1389@gmail.com'  
-EMAIL_HOST_PASSWORD = 'addt xnpk ncsn fvwd'  
-DEFAULT_FROM_EMAIL = 'maurya1389@gmail.com'  
+EMAIL_HOST_USER = 'krishpytho1389@gmail.com'  
+EMAIL_HOST_PASSWORD = 'omkb lzqi ohes ckxm'  
+DEFAULT_FROM_EMAIL = 'krishpytho1389@gmail.com'  
 
 # Static and Media Files
+
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR/'media'
 
 # PayPal Integration
 PAYPAL_RECEIVER_EMAIL = 'sb-wvvei38413680@business.example.com'
