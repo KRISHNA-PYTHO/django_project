@@ -49,6 +49,9 @@ urlpatterns = [
     path('payment/', views.payment, name='payment'),
     path('payment-success/<int:selected_address_id>/', views.payment_success, name='paymentsuccess'),
     path('payment-failed/', views.payment_failed, name='paymentfailed'),
+    path('wishlist/', views.wishlist_view, name='wishlist'),
+    path('add-to-wishlist/<int:product_id>/', views.add_to_wishlist, name='add_to_wishlist'),
+    path('remove-from-wishlist/<int:wishlist_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
 ]
 
 if settings.DEBUG:

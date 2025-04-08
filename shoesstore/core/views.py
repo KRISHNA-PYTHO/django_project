@@ -474,3 +474,22 @@ def product_list(request):
 def orders_list(request):
     orders = Order.objects.filter(user=request.user).order_by('-order_at')  # Changed from created_at to order_at
     return render(request, 'core/orders.html', {'orders': orders})
+
+
+def wishlist(request):
+    wishlist_items = Wishlist.objects.filter(user=request.user)
+    return render(request, 'core/wishlist.html', {'wishlist_items': wishlist_items})
+
+
+def add_to_wishlist(request, id):
+    product = get_object_or_404(Shoes, id=id)
+    Wishlist.objects.get_or_create(user=request.user, product=product)
+    messages.success(request, 'Added to wishlist!')
+    return redirect('shoedetails', id=id)
+
+
+def remove_from_wishlist(request, id):
+    wishlist_item = get_object_or_404(Wishlist, id=id, user=request.user)
+    wishlist_item.delete()
+    messages.success(request, 'Removed from wishlist!')
+    return redirect('wishlist')

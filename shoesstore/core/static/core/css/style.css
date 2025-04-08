@@ -174,3 +174,46 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+
+.navbar-brand {
+    text-decoration: none;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: #fff;
+    margin: 0;
+    letter-spacing: 1px;
+    position: relative;
+    background: linear-gradient(45deg,#007bff, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo-dot {
+    color: #ff9900;
+    -webkit-text-fill-color: #ff9900;
+    font-size: 32px;
+}
+
+.navbar-brand:hover {
+    transform: translateY(-2px);
+}
+
+.navbar-brand:hover h3 {
+    background: linear-gradient(45deg, #ff9900, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand h3 {
+        font-size: 24px;
+    }
+}

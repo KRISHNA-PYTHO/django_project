@@ -23,8 +23,8 @@
                         <option>Men</option>
                         <option>Women</option>
                         <option>Kids</option>
-                    </select>
-                    <input type="search" class="form-control" placeholder="Search shoes...">
+                    </select>x
+                    <input type="search " class="form-control" style="margin-left:px;" placeholder="Search shoes...">
                     <button class="btn btn-warning" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
@@ -69,6 +69,14 @@
                 </div>
             </a>
 
+            <!-- Wishlist -->
+            <a href="#" class="btn btn-dark me-3 position-relative">
+                <i class="fas fa-heart fs-4"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{ wishlist_count }}
+                </span>
+            </a>
+
             <!-- Cart -->
             <a href="{% url 'viewcart' %}" class="btn btn-dark position-relative">
                 <i class="fas fa-shopping-cart fs-4"></i>
@@ -101,13 +109,13 @@
                     <a class="nav-link" href="{% url 'kidscategories' %}">Kid's Footwear</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Electronics</a>
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Fashion</a>
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Prime Video</a>
+                    <a class="nav-link" href="#">Blogs</a>
                 </li>
 
                 {% if request.user.is_authenticated %}
