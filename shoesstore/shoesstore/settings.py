@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'paypal.standard.ipn',
-    'social_django',
 ]
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
