@@ -37,14 +37,7 @@ INSTALLED_APPS = [
     'core',
     'paypal.standard.ipn',
 ]
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-)
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'your_google_oauth2_key'  # Google Client ID
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'your_google_oauth2_secret'  # Google Client Secret
 
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
